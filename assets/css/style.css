@@ -1,0 +1,539 @@
+/*
+*	Fontes do site: League Gotic e Montserrat
+*	
+*			--- By FontSquirel ---
+*	https://www.fontsquirrel.com/tools/webfont-generator
+*/
+
+/* League-Gotic Regular */
+@font-face {
+    font-family: 'league_gothicregular';
+    src: url('../fonts/league-gotic/leaguegothic-regular-webfont.woff2') format('woff2'),
+         url('../fonts/league-gotic/leaguegothic-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* League-Gotic Condensed Italic */
+@font-face {
+    font-family: 'league_gothiccondensed_italic';
+    src: url('../fonts/league-gotic/leaguegothic-condenseditalic-webfont.woff2') format('woff2'),
+         url('../fonts/league-gotic/leaguegothic-condenseditalic-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* League-Gotic CnRg */
+@font-face {
+    font-family: 'league_gothicCnRg';
+    src: url('../fonts/league-gotic/leaguegothic-condensedregular-webfont.woff2') format('woff2'),
+         url('../fonts/league-gotic/leaguegothic-condensedregular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* League-Gotic Italic */
+@font-face {
+    font-family: 'league_gothicitalic';
+    src: url('../fonts/league-gotic/leaguegothic-italic-webfont.woff2') format('woff2'),
+         url('../fonts/league-gotic/leaguegothic-italic-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+/* Montserrat Thin */
+@font-face {
+    font-family: 'montserratthin';
+    src: url('../fonts/montserrat/montserrat-thin-webfont.woff2') format('woff2'),
+         url('../fonts/montserrat/montserrat-thin-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Montserrat Semibold */
+@font-face {
+    font-family: 'montserratsemibold';
+    src: url('../fonts/montserrat/montserrat-semibold-webfont.woff2') format('woff2'),
+         url('../fonts/montserrat/montserrat-semibold-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Montserrat Regular */
+@font-face {
+    font-family: 'montserratregular';
+    src: url('../fonts/montserrat/montserrat-regular-webfont.woff2') format('woff2'),
+         url('../fonts/montserrat/montserrat-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Montserrat Medium */
+@font-face {
+    font-family: 'montserratmedium';
+    src: url('../fonts/montserrat/montserrat-medium-webfont.woff2') format('woff2'),
+         url('../fonts/montserrat/montserrat-medium-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Montserrat Light */
+@font-face {
+    font-family: 'montserratlight';
+    src: url('../fonts/montserrat/montserrat-light-webfont.woff2') format('woff2'),
+         url('../fonts/montserrat/montserrat-light-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Montserrat ExtraLight */
+@font-face {
+    font-family: 'montserratextralight';
+    src: url('../fonts/montserrat/montserrat-extralight-webfont.woff2') format('woff2'),
+         url('../fonts/montserrat/montserrat-extralight-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Montserrat ExtraBold */
+@font-face {
+    font-family: 'montserratextrabold';
+    src: url('../fonts/montserrat/montserrat-extrabold-webfont.woff2') format('woff2'),
+         url('../fonts/montserrat/montserrat-extrabold-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Montserrat Bold */
+@font-face {
+    font-family: 'montserratbold';
+    src: url('../fonts/montserrat/montserrat-bold-webfont.woff2') format('woff2'),
+         url('../fonts/montserrat/montserrat-bold-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Montserrat Black */
+@font-face {
+    font-family: 'montserratblack';
+    src: url('../fonts/montserrat/montserrat-black-webfont.woff2') format('woff2'),
+         url('../fonts/montserrat/montserrat-black-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+}
+
+/* Login */
+.login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 120px;
+}
+.login img {
+    width: 100px;
+    height: 100px;
+}
+.login form {
+    width: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 70px;
+}
+.login input {
+    width: 330px;
+    height: 40px;
+    border: none;
+    font-family: 'montserratmedium';
+    font-size: 14px;
+    color: black;
+    outline: none;
+    background-color: #F2F2F2;
+    border: 1px solid #BDBDBD;
+    padding-left: 20px;
+    margin-bottom: 30px;
+}
+.login button {
+    width: 352px;
+    height: 42px;
+    border: none;
+    color: white;
+    font-family: 'montserratmedium';
+    font-size: 14px;
+    background-color: #DC2121;
+    cursor: pointer;
+}
+.login ::-webkit-input-placeholder {
+   color: #BDBDBD;
+}
+.login :-moz-placeholder { /* Firefox 18- */
+   color: #BDBDBD;  
+}
+.login ::-moz-placeholder {  /* Firefox 19+ */
+   color: #BDBDBD;  
+}
+.login :-ms-input-placeholder {  
+   color: #BDBDBD;  
+}
+
+/* Rodapé */
+.rodape {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #E0E0E0;
+    margin-top: 120px;
+    padding-bottom: 50px;
+}
+.rodape img {
+    width: 35px;
+    height: 35px;
+    margin-top: 50px;
+}
+.rodape p {
+    margin: 0;
+    padding: 0;
+    font-family: 'montserratmedium';
+    font-size: 12px;
+    margin-top: 30px;
+    cursor: default;
+}
+
+/* Corpo do painel */
+.corpo {
+    display: flex;
+    align-items: flex-start;
+    background-color: #363636;
+}
+
+/* Menu lateral */
+.menu {
+    flex: 1;
+    display: flex;
+    background-color: #363636;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+}
+
+/* Abrir menu */
+.abre-menu {
+    height: 50px;
+    padding-right: 20px;
+    padding-left: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #363636;
+    cursor: pointer;
+    display: none;
+    text-align: center;
+    line-height: 50px;
+    width: 100px;
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+.abre-menu p {
+    margin: 0;
+    padding: 0;
+    color: white;
+    font-size: 14px;
+    font-family: 'montserratmedium';
+}
+
+.close {
+    width: 100%;
+    height: 100px;
+    background-color: #EC1414;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'montserratmedium';
+    font-size: 36px;
+    color: white;
+    cursor: pointer;
+}
+.perfil {
+    width: 77px;
+    height: 77px;
+    border-radius: 50%;
+    background-color: #CCC;
+    margin-top: 30px;
+    overflow: hidden;
+    border: 3px solid #00BFFF;
+}
+.perfil img {
+    width: 90px;
+    height: 90px;
+}
+.hr {
+    margin: 0;
+    padding: 0;
+    width: 80px;
+    height: 1px;
+    background-color: white;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+.menu a {
+    text-decoration: none;
+}
+.add {
+    width: 80px;
+    height: 80px;
+    border-radius: 40px;
+    background-color: #32CD32;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'montserratmedium';
+    font-size: 56px;
+    color: white;
+}
+.logout {
+    width: 80px;
+    height: 80px;
+    border-radius: 40px;
+    background-color: #EC1414;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.logout img {
+    width: 40px;
+    height: 40px;
+}
+
+/* Conteúdo */
+.conteudo {
+    flex: 11;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+}
+.conteudo .rodape {
+    margin-top: 0;
+}
+.rodape-itens {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+.item-rodape {
+    flex: 1;
+    height: 262px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+.item-rodape h2 {
+    margin: 0;
+    padding: 0;
+    font-size: 18px;
+    font-family: 'montserratlight';
+    margin-top: 30px;
+    cursor: default;
+}
+.item-rodape p {
+    margin: 0;
+    padding: 0;
+    font-size: 12px;
+    font-family: 'montserratmedium';
+    margin-top: 20px;
+    cursor: default;
+}
+.item-rodape a {
+    margin: 0;
+    padding: 0;
+    font-size: 12px;
+    font-family: 'montserratmedium';
+    color: black;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.notas {
+    background-color: #E6E6E6;
+}
+.desenvolvedor {
+    background-color: #F1F1F1;
+}
+
+/* Topo */
+.topo {
+    display: flex;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    margin-right: 60px;
+    margin-left: 60px;
+    background-color: #F2F2F2;
+    border: 1px solid #BDBDBD;
+    justify-content: space-between;
+    padding-right: 30px;
+    padding-left: 30px;
+    margin-top: 60px;
+}
+.topo h2 {
+    margin: 0;
+    padding: 0;
+    font-size: 18px;
+    font-family: 'montserratlight';
+    cursor: default;
+}
+.back {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+.topo a {
+    text-decoration: none;
+    color: black;
+}
+.back h2 {
+    cursor: pointer;
+}
+.back img {
+    width: 20px;
+    height: 20px;
+    margin-left: 10px;
+}
+
+/* Corpo conteudo */
+.corpo-conteudo {
+    margin-left: 60px;
+    margin-right: 60px;
+    background-color: #F2F2F2;
+    border: 1px solid #BDBDBD;
+    margin-top: 30px;
+    margin-bottom: 60px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    padding-bottom: 30px;
+}
+.corpo-conteudo a {
+    text-decoration: none;
+    color: black;
+    margin-top: 30px;
+    margin-left: 30px;
+}
+.card-conteudo {
+    width: 330px;
+    height: 330px;
+    background-color: white;
+    border: 1px solid #BDBDBD;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.card-input {
+    margin-top: 30px;
+    margin-left: 30px;
+}
+.card-input .icon {
+    cursor: default;
+}
+.card-file {
+    margin-top: 30px;
+    margin-left: 30px;
+    cursor: pointer;
+}
+.icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
+    font-family: 'montserratmedium';
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    color: white;
+}
+
+
+
+/* 
+*  Várias cores para os ícones
+*/
+.vermelho {
+    background-color: #EC1414;
+} 
+.azul {
+    background-color: #00BFFF;
+}
+.amarelo {
+    background-color: #ECEC12;
+}
+.verde {
+    background-color: #32CD32;
+}
+.rosa {
+    background-color: #FF00FF;
+}
+.facebook {
+    background-color: #3B5998;
+}
+.instagram {
+    background-color: #8A3AB9;
+}
+.youtube {
+    background-color: #C4302B;
+}
+.linkedin {
+    background-color: #0e76a8;
+}
+.foto {
+    background-color: #4682B4;
+}
+/* 
+*/
+
+.card-conteudo h3 {
+    margin: 0;
+    padding: 0;
+    font-size: 18px;
+    font-family: 'montserratbold';
+    margin-top: 50px;
+}
+.card-conteudo p {
+    margin: 0;
+    padding: 0;
+    font-size: 12px;
+    font-family: 'montserratmedium';
+    margin-top: 20px;
+}
+.card-input input {
+    width: 230px;
+    height: 40px;
+    border: none;
+    font-family: 'montserratmedium';
+    font-size: 14px;
+    color: black;
+    outline: none;
+    background-color: #F2F2F2;
+    border: 1px solid #BDBDBD;
+    padding-left: 20px;
+    margin-top: 20px;
+}
+.card-input ::-webkit-input-placeholder {
+   color: #BDBDBD;
+}
+.card-input :-moz-placeholder { /* Firefox 18- */
+   color: #BDBDBD;  
+}
+.card-input ::-moz-placeholder {  /* Firefox 19+ */
+   color: #BDBDBD;  
+}
+.card-input :-ms-input-placeholder {  
+   color: #BDBDBD;  
+}
