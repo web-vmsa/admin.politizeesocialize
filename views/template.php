@@ -24,6 +24,9 @@
 
 	<!-- Script -->
 	<script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/script.js"></script>
+
+	<!-- CKEditor v4 -->
+	<script src="<?php echo BASE_URL; ?>assets/js/ckeditor/ckeditor.js"></script>
 </head>
 <body>
 	<!-- Abre menu -->

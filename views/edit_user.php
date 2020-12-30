@@ -11,7 +11,7 @@
 </div>
 
 <!-- Itens do gerenciamento -->
-<form method="POST" enctype="multipart/form-data" class="corpo-conteudo">
+<form method="POST" enctype="multipart/form-data" class="corpo-conteudo" id="edit_user">
 	<div class="card-conteudo card-input">
 		<div class="icon verde">N</div>
 		<h3>NOME</h3>

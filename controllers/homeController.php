@@ -27,5 +27,14 @@ class homeController extends controller {
 		$this->loadTemplate('edit_user', $dados);
 
 	}
+
+	public function add(){
+
+
+		$dados = array();
+
+		$this->loadTemplate('add_user', $dados);
+
+	}
 	
 }
