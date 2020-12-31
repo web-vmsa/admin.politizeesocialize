@@ -1,0 +1,40 @@
+<!-- Topo -->
+<div class="topo">
+	<h2>ADICIONAR TIME</h2>
+
+	<a href="<?php echo BASE_URL; ?>home/painel">
+		<div class="back">
+			<h2>VOLTAR</h2>
+			<img src="<?php echo BASE_URL; ?>assets/images/iconmonstr-undo-4.svg">
+		</div>
+	</a>
+</div>
+
+<!-- Itens do gerenciamento -->
+<form method="POST" enctype="multipart/form-data" class="corpo-conteudo" id="add_team">
+	<div class="card-conteudo card-input">
+		<div class="icon vermelho">N</div>
+		<h3>NOME</h3>
+		<input type="text" name="nome" id="nome" placeholder="NOME">
+	</div>
+	
+	<label for="escudo_time" class="card-conteudo card-file">
+		<div class="icon foto">E</div>
+		<h3>ESCUDO</h3>
+		<p>SELECIONE UM ARQUIVO</p>
+	</label>
+
+	<div class="card-conteudo card-input">
+		<div class="icon amarelo">A</div>
+		<h3>ALCUNHA</h3>
+		<input type="text" name="alcunha" id="alcunha" placeholder="ALCUNHA">
+	</div>
+
+	<button type="submit" class="card-conteudo card-file card-button">
+		<div class="icon verde">F</div>
+		<h3>FINALIZAR</h3>
+		<p>CRIAR ESTE TIME</p>
+	</button>
+
+	<input style="display: none;" type="file" id="escudo_time" name="escudo_time">
+</form>

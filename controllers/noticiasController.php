@@ -18,5 +18,14 @@ class noticiasController extends controller {
 		$this->loadTemplate('add_news', $dados);
 
 	}
+
+	public function edit(){
+
+
+		$dados = array();
+
+		$this->loadTemplate('edit_news', $dados);
+
+	}
 	
 }
