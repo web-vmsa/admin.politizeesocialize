@@ -47,4 +47,33 @@ $(document).ready(function(){
 
 	});
 
+	// Valida formulário de login
+	$("#formulario_login").submit(function(e){
+
+		e.preventDefault();
+
+		var data_login = $(this).serialize();
+
+		var email = $("#email").val();
+		var senha = $("#senha").val();
+
+		if (email == "" || senha == "") {
+			swal("Opa!", "Insira seu e-mail e senha!", "warning");
+		} else {
+			$.ajax({
+				type:'POST',
+				url:raiz+'ajax',
+				data:data_login,
+				success:function(result){
+					if (result == 1) {
+						window.location.href=raiz+'home/painel'
+					} else {
+						swal("Opa!", "Parece que este usuário não existe!", "error");
+					}
+				}
+			});
+		}
+
+	});
+
 });

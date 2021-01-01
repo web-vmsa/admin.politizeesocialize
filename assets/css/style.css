@@ -123,6 +123,17 @@
     font-style: normal;
 }
 
+/*
+*   Swalalert Customizações
+*
+*/
+.swal-title {
+    font-family: 'montserratmedium';
+}
+.swal-text {
+    font-family: 'montserratregular';
+}
+
 body {
 	margin: 0;
 	padding: 0;
@@ -170,6 +181,7 @@ body {
     font-size: 14px;
     background-color: #DC2121;
     cursor: pointer;
+    outline: none;
 }
 .login ::-webkit-input-placeholder {
    color: #BDBDBD;

@@ -36,5 +36,14 @@ class homeController extends controller {
 		$this->loadTemplate('add_user', $dados);
 
 	}
+
+	public function logout(){
+
+
+		$dados = array();
+
+		$this->loadView('logout', $dados);
+
+	}
 	
 }

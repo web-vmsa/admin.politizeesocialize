@@ -1,3 +1,14 @@
+<?php 
+if (isset($_SESSION['id']) && !empty($_SESSION['id'])) {
+	echo "
+		<script type='text/javascript'>
+			window.location.href='".BASE_URL."home/painel'
+		</script>
+	";
+} else {
+	# code...
+}
+?> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,7 +17,7 @@
 	<meta name="title" content="Politize e socialize - Painel administrativo">
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="robots" content="index, follow">
+	<meta name="robots" content="noindex, follow">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="language" content="Portuguese">
 	<meta name="revisit-after" content="2 days">
@@ -24,6 +35,9 @@
 
 	<!-- Script -->
 	<script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/script.js"></script>
+
+	<!-- SweetAlert -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 <body>
 	<!-- Login -->
