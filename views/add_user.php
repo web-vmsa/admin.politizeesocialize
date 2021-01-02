@@ -1,3 +1,31 @@
+<?php
+
+	$propriedades = json_decode($usuario['usuario_prop']); 
+
+	$permissoes = explode(",", $usuario['permissoes']);
+
+	if ($propriedades->nivel == "adm") {
+		
+		if (in_array("ADD", $permissoes)) {
+			# code...
+		} else {
+			echo "
+				<script type='text/javascript'>
+					window.location.href='".BASE_URL."home/painel'
+				</script>
+			";
+		}
+
+	} else {
+		echo "
+			<script type='text/javascript'>
+				window.location.href='".BASE_URL."home/painel'
+			</script>
+		";
+	}
+
+?>
+
 <!-- Topo -->
 <div class="topo">
 	<h2>ADICIONAR USUÁRIO</h2>

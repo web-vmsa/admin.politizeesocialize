@@ -56,7 +56,7 @@ if (isset($_SESSION['id']) && !empty($_SESSION['id'])) {
 
 			<a href="<?php echo BASE_URL; ?>home/edit">
 				<div class="perfil">
-					<img src="https://odia.ig.com.br/_midias/jpg/2019/12/19/galvao-14837686.jpg">
+					<img src="<?php echo BASE_URL; ?>assets/images/iconmonstr-user-20.svg">
 				</div>
 			</a>
 

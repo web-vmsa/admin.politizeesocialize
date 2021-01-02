@@ -13,7 +13,12 @@ class homeController extends controller {
 	public function painel() {
 
 
-		$dados = array();
+		$usuario = new Usuarios();
+		$usuario->id = $_SESSION['id'];
+
+		$dados = array(
+			'usuario' => $usuario->get_user()
+		);
 
 		$this->loadTemplate('painel', $dados);
 
@@ -31,7 +36,12 @@ class homeController extends controller {
 	public function add(){
 
 
-		$dados = array();
+		$usuario = new Usuarios();
+		$usuario->id = $_SESSION['id'];
+
+		$dados = array(
+			'usuario' => $usuario->get_user()
+		);
 
 		$this->loadTemplate('add_user', $dados);
 

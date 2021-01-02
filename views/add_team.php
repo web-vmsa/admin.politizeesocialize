@@ -1,3 +1,21 @@
+<?php
+
+	$propriedades = json_decode($usuario['usuario_prop']); 
+
+	$permissoes = explode(",", $usuario['permissoes']);
+
+	if ($propriedades->nivel == "adm") {
+		# code....
+	} else {
+		echo "
+			<script type='text/javascript'>
+				window.location.href='".BASE_URL."home/painel'
+			</script>
+		";
+	}
+
+?>
+
 <!-- Topo -->
 <div class="topo">
 	<h2>ADICIONAR TIME</h2>

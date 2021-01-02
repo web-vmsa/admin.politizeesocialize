@@ -1,3 +1,11 @@
+<?php 
+	
+	$propriedades = json_decode($usuario['usuario_prop']); 
+
+	$permissoes = explode(",", $usuario['permissoes']);
+
+?>
+
 <!-- Topo -->
 <div class="topo">
 	<h2>GERENCIAMENTO</h2>
@@ -5,13 +13,6 @@
 
 <!-- Itens do gerenciamento -->
 <div class="corpo-conteudo">
-	<a href="<?php echo BASE_URL; ?>noticias">
-		<div class="card-conteudo">
-			<div class="icon vermelho">N</div>
-			<h3>NOTÍCIA</h3>
-			<p>NOVA INFORMAÇÃO AO SITE</p>
-		</div>
-	</a>
 	<a href="<?php echo BASE_URL; ?>home/edit">
 		<div class="card-conteudo">
 			<div class="icon azul">I</div>
@@ -19,13 +20,19 @@
 			<p>SEUS DADOS DE PESSOAIS</p>
 		</div>
 	</a>
-	<a href="<?php echo BASE_URL; ?>jogos/team">
+
+	<?php if($propriedades->nivel == "escritor"): ?>
+
+	<a href="<?php echo BASE_URL; ?>noticias">
 		<div class="card-conteudo">
-			<div class="icon amarelo">T</div>
-			<h3>TIME</h3>
-			<p>NOVO TIME AS COMPETIÇÕES</p>
+			<div class="icon vermelho">N</div>
+			<h3>NOTÍCIA</h3>
+			<p>NOVA INFORMAÇÃO AO SITE</p>
 		</div>
 	</a>
+
+	<?php if($propriedades->categoria == "esportes"): ?>
+
 	<a href="<?php echo BASE_URL; ?>jogos">
 		<div class="card-conteudo">
 			<div class="icon amarelo">J</div>
@@ -33,6 +40,9 @@
 			<p>NOVA PLACAR AO VIO</p>
 		</div>
 	</a>
+
+	<?php endif; ?>
+
 	<a href="<?php echo BASE_URL; ?>colunas">
 		<div class="card-conteudo">
 			<div class="icon vermelho">O</div>
@@ -40,6 +50,21 @@
 			<p>NOVA OPINIÃO AS COLUNAS</p>
 		</div>
 	</a>
+
+	<?php endif; ?>
+
+	<?php if($propriedades->nivel == "adm"): ?>
+
+	<a href="<?php echo BASE_URL; ?>jogos/team">
+		<div class="card-conteudo">
+			<div class="icon amarelo">T</div>
+			<h3>TIME</h3>
+			<p>NOVO TIME AS COMPETIÇÕES</p>
+		</div>
+	</a>
+
+	<?php if(in_array("ADD", $permissoes)): ?>
+
 	<a href="<?php echo BASE_URL; ?>home/add">
 		<div class="card-conteudo">
 			<div class="icon verde">U</div>
@@ -47,4 +72,9 @@
 			<p>NOVO USUÁRIO ADMINISTRADOR</p>
 		</div>
 	</a>
+
+	<?php endif; ?>
+
+	<?php endif; ?>
+
 </div>
