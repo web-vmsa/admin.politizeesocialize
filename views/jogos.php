@@ -1,3 +1,33 @@
+<?php
+
+	$propriedades = json_decode($usuario['usuario_prop']); 
+
+	$permissoes = explode(",", $usuario['permissoes']);
+
+	if ($propriedades->nivel == "escritor") {
+		
+		if ($propriedades->categoria == "esportes") {
+			
+			# code...
+
+		} else {
+			echo "
+				<script type='text/javascript'>
+					window.location.href='".BASE_URL."home/painel'
+				</script>
+			";
+		}
+
+	} else {
+		echo "
+			<script type='text/javascript'>
+				window.location.href='".BASE_URL."home/painel'
+			</script>
+		";
+	}
+
+?>
+
 <!-- Topo -->
 <div class="topo">
 	<h2>JOGOS</h2>
@@ -12,6 +42,9 @@
 
 <!-- Itens do gerenciamento -->
 <div class="corpo-conteudo sem-margem">
+
+	<?php if(in_array("ADD", $permissoes)): ?>
+
 	<a href="<?php echo BASE_URL; ?>jogos/add">
 		<div class="card-conteudo">
 			<div class="icon amarelo">J</div>
@@ -19,6 +52,9 @@
 			<p>NOVO PLACAR AO VIVO</p>
 		</div>
 	</a>
+
+	<?php endif; ?>
+	
 </div>
 
 <!-- Topo -->

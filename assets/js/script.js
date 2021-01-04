@@ -76,4 +76,59 @@ $(document).ready(function(){
 
 	});
 
+	// Valida formulário de adicionar o usuário
+	$("#add_user").submit(function(e){
+
+		e.preventDefault();
+
+		var add_user = $(this).serialize();
+
+		var nome = $("#nome").val();
+		var email = $("#email").val();
+		var senha = $("#senha").val();
+		var permissoes = $("#permissoes").val();
+		var propriedades = $("#propriedades").val();
+
+		if (nome == "" || email == "" || senha == "" || permissoes == "" || propriedades == "") {
+			swal("Opa!", "Prrencha todos os campos obrigatórios!", "warning");
+		} else {
+			$.ajax({
+				type:'POST',
+				url:raiz+'ajax/add_user',
+				data:add_user,
+				success:function(result){
+					$("#add_user input").val("");
+					swal(result, "Este usuário foi criado com sucesso!", "success");
+				}
+			});
+		}
+
+	});
+
+	// Valida formulário de edição de perfil
+	$("#edit_user").submit(function(e){
+
+		e.preventDefault();
+
+		var form = $("#edit_user")[0];
+		var data_edit = new FormData(form);
+
+		$.ajax({
+			type:'POST',
+			url:raiz+'ajax/edit_user',
+			data:data_edit,
+			contentType:false,
+			processData:false,
+			success:function(result){
+				if (result == 1) {
+					$("#foto_perfil").val("");
+					swal("Sucesso!", "Sua foto foi editada com sucesso!", "success");
+				} else {
+					swal("Sucesso!", "Seus dados foram editados com sucesso!", "success");
+				}
+			}
+		});
+
+	});
+
 });

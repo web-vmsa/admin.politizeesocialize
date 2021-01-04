@@ -9,8 +9,14 @@
 class Usuarios extends model {
 
 	public $id;
+	public $nome;
+	public $foto;
+	public $social;
+	public $biografia;
 	public $email;
 	public $senha;
+	public $permissoes;
+	public $propriedades;
 
 	/*
 	* Função Login
@@ -55,6 +61,83 @@ class Usuarios extends model {
 		if ($sql->rowCount() > 0) {
 			return $sql->fetch();
 		}
+
+	}
+
+	/*
+	* Função de adicionar um novo Usuário
+	* 
+	* Esta função irá adicionar um novo usuário ao banco de dados
+	* Exclusiva a adms
+	*
+	* @param $nome string é o nome do usuário
+	* @param $email string é o email do usuário
+	* @param $senha string é a senha do usuário
+	* @param $permissoes string são as permissões do usuário
+	* @param $propriedades string são as propriedades do usuário
+	* @return true or false
+	*/
+	public function add_user(){
+
+		$sql = "INSERT INTO usuarios SET nome = :nome, social = :social, email = :email, senha = :senha, permissoes = :permissoes, usuario_prop = :propriedades, status = '1'";
+		$sql = $this->db->prepare($sql);
+		$sql->bindValue(':nome', $this->nome);
+		$sql->bindValue(':social', $this->social);
+		$sql->bindValue(':email', $this->email);
+		$sql->bindValue(':senha', $this->senha);
+		$sql->bindValue(':permissoes', $this->permissoes);
+		$sql->bindValue(':propriedades', $this->propriedades);
+		$sql->execute();
+
+	}
+
+	/*
+	* Função de atualizar um Usuário
+	* 
+	* Esta função irá atualizar os dados de um usuário do banco de dados
+	* Exclusiva a adms
+	*
+	* @param $nome string é o nome do usuário
+	* @param $social json são as redes sociais do usuário
+	* @param $biografia string biografia/frase fornecida pelo usuário
+	* @param $id int id do usuário da sessão
+	* @return true or false
+	*/
+	public function update_user(){
+
+		$sql = "UPDATE usuarios SET nome = :nome, social = :social, biografia = :biografia WHERE id = :id";
+		$sql = $this->db->prepare($sql);
+		$sql->bindValue(":id", $this->id);
+		$sql->bindValue(":nome", $this->nome);
+		$sql->bindValue(":social", $this->social);
+		$sql->bindValue(":biografia", $this->biografia);
+		$sql->execute();
+
+	}
+
+	/*
+	* Função de atualizar a foto mais os dados do usuário
+	* 
+	* Esta função irá atualizar os dados de um usuário junto a foto do banco de dados
+	* Exclusiva a adms
+	*
+	* @param $nome string é o nome do usuário
+	* @param $social json são as redes sociais do usuário
+	* @param $foto string é a foto fornecida pelo usuário
+	* @param $biografia string biografia/frase fornecida pelo usuário
+	* @param $id int id do usuário da sessão
+	* @return true or false
+	*/
+	public function update_photo(){
+
+		$sql = "UPDATE usuarios SET nome = :nome, foto = :foto, social = :social, biografia = :biografia WHERE id = :id";
+		$sql = $this->db->prepare($sql);
+		$sql->bindValue(":id", $this->id);
+		$sql->bindValue(":nome", $this->nome);
+		$sql->bindValue(":foto", $this->foto);
+		$sql->bindValue(":social", $this->social);
+		$sql->bindValue(":biografia", $this->biografia);
+		$sql->execute();
 
 	}
 

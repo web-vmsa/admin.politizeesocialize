@@ -27,7 +27,12 @@ class homeController extends controller {
 	public function edit(){
 
 
-		$dados = array();
+		$usuario = new Usuarios();
+		$usuario->id = $_SESSION['id'];
+
+		$dados = array(
+			'usuario' => $usuario->get_user()
+		);
 
 		$this->loadTemplate('edit_user', $dados);
 
