@@ -4,7 +4,12 @@ class colunasController extends controller {
 	public function index(){
 
 
-		$dados = array();
+		$usuario = new Usuarios();
+		$usuario->id = $_SESSION['id'];
+
+		$dados = array(
+			'usuario' => $usuario->get_user()
+		);
 
 		$this->loadTemplate('colunas', $dados);
 
@@ -13,7 +18,12 @@ class colunasController extends controller {
 	public function add(){
 
 
-		$dados = array();
+		$usuario = new Usuarios();
+		$usuario->id = $_SESSION['id'];
+
+		$dados = array(
+			'usuario' => $usuario->get_user()
+		);
 
 		$this->loadTemplate('add_opi', $dados);
 
@@ -22,7 +32,12 @@ class colunasController extends controller {
 	public function edit(){
 
 
-		$dados = array();
+		$usuario = new Usuarios();
+		$usuario->id = $_SESSION['id'];
+
+		$dados = array(
+			'usuario' => $usuario->get_user()
+		);
 
 		$this->loadTemplate('edit_opi', $dados);
 

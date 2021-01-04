@@ -1,3 +1,31 @@
+<?php
+
+	$propriedades = json_decode($usuario['usuario_prop']); 
+
+	$permissoes = explode(",", $usuario['permissoes']);
+
+	if ($propriedades->nivel == "escritor") {
+		
+		if (in_array("ADD", $permissoes)) {
+			# code...
+		} else {
+			echo "
+				<script type='text/javascript'>
+					window.location.href='".BASE_URL."colunas'
+				</script>
+			";
+		}
+
+	} else {
+		echo "
+			<script type='text/javascript'>
+				window.location.href='".BASE_URL."home/painel'
+			</script>
+		";
+	}
+
+?>
+
 <form class="conteudo" method="POST" enctype="multipart/form-data" id="add_opi">
 	<!-- Topo -->
 	<div class="topo">

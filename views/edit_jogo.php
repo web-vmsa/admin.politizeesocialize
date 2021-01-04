@@ -13,7 +13,7 @@
 			} else {
 				echo "
 					<script type='text/javascript'>
-						window.location.href='".BASE_URL."home/painel'
+						window.location.href='".BASE_URL."jogos'
 					</script>
 				";
 			}

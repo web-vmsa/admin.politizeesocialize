@@ -1,3 +1,21 @@
+<?php
+
+	$propriedades = json_decode($usuario['usuario_prop']); 
+
+	$permissoes = explode(",", $usuario['permissoes']);
+
+	if ($propriedades->nivel == "escritor") {
+		# code....
+	} else {
+		echo "
+			<script type='text/javascript'>
+				window.location.href='".BASE_URL."home/painel'
+			</script>
+		";
+	}
+
+?>
+
 <!-- Topo -->
 <div class="topo">
 	<h2>NOTÍCIAS</h2>
@@ -12,6 +30,9 @@
 
 <!-- Itens do gerenciamento -->
 <div class="corpo-conteudo sem-margem">
+
+	<?php if(in_array("ADD", $permissoes)): ?>
+
 	<a href="<?php echo BASE_URL; ?>noticias/add">
 		<div class="card-conteudo">
 			<div class="icon verde">N</div>
@@ -19,6 +40,9 @@
 			<p>NOVA INFORMAÇÃO AO SITE</p>
 		</div>
 	</a>
+
+	<?php endif; ?>
+
 </div>
 
 <!-- Topo -->
