@@ -148,6 +148,8 @@ class ajaxController extends controller {
 
 	public function add_news(){
 
+		date_default_timezone_set('America/Sao_Paulo');
+
 		$dados = array();
 
 		if (!empty($_POST['titulo'])) {
@@ -175,7 +177,7 @@ class ajaxController extends controller {
 						'tipo' => 'video',
 						'legenda' => $legenda
 					);
-					$postagem = htmlspecialchars($_POST['noticia']);
+					$postagem = $_POST['noticia'];
 					$data = date("Y/m/d H:i:s");
 
 					$nova_noticia = new Noticias();
@@ -213,7 +215,7 @@ class ajaxController extends controller {
 						'tipo' => 'imagem',
 						'legenda' => $legenda
 					);
-					$postagem = htmlspecialchars($_POST['noticia']);
+					$postagem = $_POST['noticia'];
 					$data = date("Y/m/d H:i:s");
 
 					$nova_noticia = new Noticias();

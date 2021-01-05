@@ -138,17 +138,28 @@ $(document).ready(function(){
 
 		e.preventDefault();
 
-		var nova_noticia = $("#add_news")[0];
-		var noticia_add = new FormData(nova_noticia);
+		var noticia_add = new FormData();
 
-		var titulo = $("#titulo").val();
-		var descricao = $("#descricao").val();
-		var tags = $("#tags").val();
-		var legenda = $("#legenda").val();
+		var arquivos = $('#anexo_noticia')[0].files;
 
-		if (titulo == "" || descricao == "" || tags == "" || legenda == "") {
+		if (arquivos.length < 0) {
 			swal("Opa!", "Nem todos os campos necessários estão preenchidos!", "warning");
 		} else {
+
+			noticia_add.append('noticia', CKEDITOR.instances.noticia.getData());
+
+			noticia_add.append('legenda', $("#legenda").val());
+
+			noticia_add.append('titulo', $("#titulo").val());
+
+			noticia_add.append('descricao', $("#descricao").val());
+
+			noticia_add.append('tags', $("#tags").val());
+
+			noticia_add.append('categoria', $("#categoria").val());
+
+			noticia_add.append('anexo_noticia', arquivos[0]);
+
 			$.ajax({
 				type:'POST',
 				url:raiz+'ajax/add_news',

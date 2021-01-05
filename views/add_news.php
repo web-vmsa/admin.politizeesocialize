@@ -80,7 +80,7 @@
 	</div>
 
 	<input style="display: none;" type="file" id="anexo_noticia" name="anexo_noticia">
-	<input style="display: none;" type="text" name="categoria" value="<?php echo $propriedades->categoria; ?>">
+	<input style="display: none;" type="text" id="categoria" name="categoria" value="<?php echo $propriedades->categoria; ?>">
 
 	<!-- Topo -->
 	<div class="topo">
