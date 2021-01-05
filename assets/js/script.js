@@ -131,4 +131,41 @@ $(document).ready(function(){
 
 	});
 
+	CKEDITOR.replace( 'noticia' );
+
+	// Valida formulário de nova notícia
+	$("#add_news").submit(function(e){
+
+		e.preventDefault();
+
+		var nova_noticia = $("#add_news")[0];
+		var noticia_add = new FormData(nova_noticia);
+
+		var titulo = $("#titulo").val();
+		var descricao = $("#descricao").val();
+		var tags = $("#tags").val();
+		var legenda = $("#legenda").val();
+
+		if (titulo == "" || descricao == "" || tags == "" || legenda == "") {
+			swal("Opa!", "Nem todos os campos necessários estão preenchidos!", "warning");
+		} else {
+			$.ajax({
+				type:'POST',
+				url:raiz+'ajax/add_news',
+				data:noticia_add,
+				contentType:false,
+				processData:false,
+				success:function(result){
+					if (result == 1) {
+						$("#add_news input").val("");
+						swal("Sucesso!", "Sua notícia foi publicada com sucesso!", "success");
+					} else {
+						swal("Erro!", "Algo inesperado aconteceu, comunique o admin!", "error");
+					}
+				}
+			});
+		}
+
+	});
+
 });
