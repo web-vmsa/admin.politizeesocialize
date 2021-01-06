@@ -7,8 +7,12 @@ class noticiasController extends controller {
 		$usuario = new Usuarios();
 		$usuario->id = $_SESSION['id'];
 
+		$noticias = new Noticias();
+		$noticias->id_usuario = $_SESSION['id'];
+
 		$dados = array(
-			'usuario' => $usuario->get_user()
+			'usuario' => $usuario->get_user(),
+			'noticias' => $noticias->get_news()
 		);
 
 		$this->loadTemplate('noticias', $dados);
@@ -29,14 +33,18 @@ class noticiasController extends controller {
 
 	}
 
-	public function edit(){
+	public function edit($id){
 
+		$noticia = new Noticias();
+		$noticia->id = $id;
+		$noticia->id_usuario = $_SESSION['id']; 
 
 		$usuario = new Usuarios();
 		$usuario->id = $_SESSION['id'];
 
 		$dados = array(
-			'usuario' => $usuario->get_user()
+			'usuario' => $usuario->get_user(),
+			'noticia' => $noticia->get_new()
 		);
 
 		$this->loadTemplate('edit_news', $dados);

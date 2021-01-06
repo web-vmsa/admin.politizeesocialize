@@ -170,7 +170,17 @@ class ajaxController extends controller {
 					$titulo = htmlspecialchars($_POST['titulo']);
 					$descricao = htmlspecialchars($_POST['descricao']);
 					$tags = htmlspecialchars($_POST['tags']);
-					$url = $titulo;
+
+
+					$semAcentos = array('a', 'a', 'a', 'a', 'a', 'a', 'c', 'e', 'e', 'e', 'e', 'i', 'i', 'i', 'i', 'n', 'o', 'o', 'o', 'o', 'o', 'u', 'u', 'u', 'y', 'A', 'A', 'A', 'A', 'A', 'A', 'C', 'E', 'E', 'E', 'E', 'I', 'I', 'I', 'I', 'N', 'O', 'O', 'O', 'O', 'O', '0', 'U', 'U', 'U', '', '', '', '', '', '');
+
+					$comAcentos = array('à', 'á', 'â', 'ã', 'ä', 'å', 'ç', 'è', 'é', 'ê', 'ë', 'ì', 'í', 'î', 'ï', 'ñ', 'ò', 'ó', 'ô', 'õ', 'ö', 'ù', 'ü', 'ú', 'ÿ', 'À', 'Á', 'Â', 'Ã', 'Ä', 'Å', 'Ç', 'È', 'É', 'Ê', 'Ë', 'Ì', 'Í', 'Î', 'Ï', 'Ñ', 'Ò', 'Ó', 'Ô', 'Õ', 'Ö', 'O', 'Ù', 'Ü', 'Ú', '?', '!', ',', '(', ')', '"');
+
+					$novo_titulo = strtolower(str_replace($comAcentos, $semAcentos, $titulo))."-".str_replace("/","-",date("Y/m/d"));
+					$resultado = preg_replace('/[ -]+/' , '-' , $novo_titulo);
+
+
+					$url = $resultado;
 					$legenda = htmlspecialchars($_POST['legenda']);
 					$arquivo = $novoNome;
 					$arquivo_prop = array(
@@ -208,7 +218,17 @@ class ajaxController extends controller {
 					$titulo = htmlspecialchars($_POST['titulo']);
 					$descricao = htmlspecialchars($_POST['descricao']);
 					$tags = htmlspecialchars($_POST['tags']);
-					$url = $titulo;
+
+
+					$semAcentos = array('a', 'a', 'a', 'a', 'a', 'a', 'c', 'e', 'e', 'e', 'e', 'i', 'i', 'i', 'i', 'n', 'o', 'o', 'o', 'o', 'o', 'u', 'u', 'u', 'y', 'A', 'A', 'A', 'A', 'A', 'A', 'C', 'E', 'E', 'E', 'E', 'I', 'I', 'I', 'I', 'N', 'O', 'O', 'O', 'O', 'O', '0', 'U', 'U', 'U', '', '', '', '', '', '');
+
+					$comAcentos = array('à', 'á', 'â', 'ã', 'ä', 'å', 'ç', 'è', 'é', 'ê', 'ë', 'ì', 'í', 'î', 'ï', 'ñ', 'ò', 'ó', 'ô', 'õ', 'ö', 'ù', 'ü', 'ú', 'ÿ', 'À', 'Á', 'Â', 'Ã', 'Ä', 'Å', 'Ç', 'È', 'É', 'Ê', 'Ë', 'Ì', 'Í', 'Î', 'Ï', 'Ñ', 'Ò', 'Ó', 'Ô', 'Õ', 'Ö', 'O', 'Ù', 'Ü', 'Ú', '?', '!', ',', '(', ')', '"');
+
+					$novo_titulo = strtolower(str_replace($comAcentos, $semAcentos, $titulo))."-".str_replace("/","-",date("Y/m/d"));
+					$resultado = preg_replace('/[ -]+/' , '-' , $novo_titulo);
+
+
+					$url = $resultado;
 					$legenda = htmlspecialchars($_POST['legenda']);
 					$arquivo = $novoNome;
 					$arquivo_prop = array(
@@ -242,6 +262,44 @@ class ajaxController extends controller {
 				$dados['resultado'] = 0;
 
 			}
+
+		}
+
+		$this->loadView('ajax', $dados);
+
+	}
+
+	public function edit_news(){
+
+
+		$dados = array();
+
+		if (!empty($_POST['id']) && !empty($_POST['titulo']) && !empty($_POST['descricao']) && !empty($_POST['tags']) && !empty($_POST['legenda']) && !empty($_POST['noticia']) && !empty($_POST['tipo'])) {
+			
+			$id = $_POST['id'];
+			$titulo = $_POST['titulo'];
+			$descricao = $_POST['descricao'];
+			$tags = $_POST['tags'];
+			$tipo = $_POST['tipo'];
+			$legenda = $_POST['legenda'];
+
+			$arquivo_prop = array(
+				'tipo' => $tipo,
+				'legenda' => $legenda
+			);
+
+			$noticia_edit = new Noticias();
+			$noticia_edit->id = $id;
+			$noticia_edit->titulo = $titulo;
+			$noticia_edit->descricao = $descricao;
+			$noticia_edit->tags = $tags;
+			$noticia_edit->arquivo_prop = json_encode($arquivo_prop);
+			$noticia_edit->postagem = $_POST['noticia'];
+			$noticia_edit->update_new();
+
+		} else {
+
+			$dados['resultado'] = 1;
 
 		}
 

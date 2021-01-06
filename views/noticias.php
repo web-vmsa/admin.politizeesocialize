@@ -52,138 +52,78 @@
 
 <!-- Itens do gerenciamento -->
 <div class="corpo-conteudo">
+
+	<?php 
+		foreach($noticias as $dados):
+
+		$arquivo_prop = json_decode($dados['arquivo_prop']);
+	?>
+
 	<div class="noticia-menor-politica">
-		<img src="https://ogimg.infoglobo.com.br/in/23339989-b88-b82/FT1086A/652/80469877_Brazils-new-President-Jair-Bolsonaro-L-and-Brazils-new-Vice-President-Hamilton-Mourao.jpg">
+		
+		<?php if($arquivo_prop->tipo == "imagem"): ?>
+
+		<img src="<?php echo BASE_URL; ?>users/images/<?php echo $dados['arquivo']; ?>">
+
+		<?php elseif($arquivo_prop->tipo == "video"): ?>
+
+		<video>
+			<source src="<?php echo BASE_URL; ?>users/videos/<?php echo $dados['arquivo']; ?>" type="video/mp4">
+		</video>
+
+		<?php endif; ?>
+
 		<div class="noticia-menor-conteudo-politica">
-			<h2>LOREM IPSUM  DOLOR SIT AMET, CONSECTETUR ADIPISCING</h2>
-			<p>POR HUGO SOUZA | 20 DE OUTUBRO<br>DE 2020</p>
+			<h2><?php echo mb_strtoupper($dados['titulo']); ?></h2>
+			<p>POR <?php echo mb_strtoupper($dados['nome']); ?> | <?php echo $dados['dia']; ?> DE 
+
+				<?php
+					switch ($dados['mes']) {
+				        case "01":    $mes = "JANEIRO";     break;
+				        case "02":    $mes = "FEVEREIRO";   break;
+				        case "03":    $mes = "MARÇO";       break;
+				        case "04":    $mes = "ABRIL";       break;
+				        case "05":    $mes = "MAIO";        break;
+				        case "06":    $mes = "JUNHO";       break;
+				        case "07":    $mes = "JULHO";       break;
+				        case "08":    $mes = "AGOSTO";      break;
+				        case "09":    $mes = "SETEMBRO";    break;
+				        case "10":    $mes = "OUTUBRO";     break;
+				        case "11":    $mes = "NOVEMBRO";    break;
+				        case "12":    $mes = "DEZEMBRO";    break; 
+				 }
+				 
+				 echo $mes;
+				?>
+
+
+				<br>DE <?php echo $dados['ano']; ?></p>
 
 			<div class="opcoes">
-				<div class="edit" data-id="12" data-redirect="noticias">
+
+				<?php if(in_array("EDIT", $permissoes)): ?>
+
+				<div class="edit" data-id="<?php echo $dados['id']; ?>" data-redirect="noticias">
 					<img src="<?php echo BASE_URL; ?>assets/images/iconmonstr-edit-10.svg">
 					<p>EDITAR</p>
 				</div>
-				<div class="delete" data-id="12" data-redirect="noticias">
+
+				<?php endif; ?>
+
+				<?php if(in_array("DEL", $permissoes)): ?>
+
+				<div class="delete" data-id="<?php echo $dados['id']; ?>" data-redirect="noticias">
 					<img src="<?php echo BASE_URL; ?>assets/images/iconmonstr-x-mark-4.svg">
 					<p>EXCLUIR</p>
 				</div>
+
+				<?php endif; ?>
+
 			</div>
 		</div>
 	</div>
 
-	<div class="noticia-menor-politica">
-		<img src="https://ogimg.infoglobo.com.br/in/23339989-b88-b82/FT1086A/652/80469877_Brazils-new-President-Jair-Bolsonaro-L-and-Brazils-new-Vice-President-Hamilton-Mourao.jpg">
-		<div class="noticia-menor-conteudo-politica">
-			<h2>LOREM IPSUM  DOLOR SIT AMET, CONSECTETUR ADIPISCING</h2>
-			<p>POR HUGO SOUZA | 20 DE OUTUBRO<br>DE 2020</p>
-
-			<div class="opcoes">
-				<div class="edit" data-id="14" data-redirect="noticias">
-					<img src="<?php echo BASE_URL; ?>assets/images/iconmonstr-edit-10.svg">
-					<p>EDITAR</p>
-				</div>
-				<div class="delete" data-id="14" data-redirect="noticias">
-					<img src="<?php echo BASE_URL; ?>assets/images/iconmonstr-x-mark-4.svg">
-					<p>EXCLUIR</p>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="noticia-menor-politica">
-		<img src="https://ogimg.infoglobo.com.br/in/23339989-b88-b82/FT1086A/652/80469877_Brazils-new-President-Jair-Bolsonaro-L-and-Brazils-new-Vice-President-Hamilton-Mourao.jpg">
-		<div class="noticia-menor-conteudo-politica">
-			<h2>LOREM IPSUM  DOLOR SIT AMET, CONSECTETUR ADIPISCING</h2>
-			<p>POR HUGO SOUZA | 20 DE OUTUBRO<br>DE 2020</p>
-
-			<div class="opcoes">
-				<div class="edit" data-id="14" data-redirect="noticias">
-					<img src="<?php echo BASE_URL; ?>assets/images/iconmonstr-edit-10.svg">
-					<p>EDITAR</p>
-				</div>
-				<div class="delete" data-id="14" data-redirect="noticias">
-					<img src="<?php echo BASE_URL; ?>assets/images/iconmonstr-x-mark-4.svg">
-					<p>EXCLUIR</p>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="noticia-menor-politica">
-		<img src="https://ogimg.infoglobo.com.br/in/23339989-b88-b82/FT1086A/652/80469877_Brazils-new-President-Jair-Bolsonaro-L-and-Brazils-new-Vice-President-Hamilton-Mourao.jpg">
-		<div class="noticia-menor-conteudo-politica">
-			<h2>LOREM IPSUM  DOLOR SIT AMET, CONSECTETUR ADIPISCING</h2>
-			<p>POR HUGO SOUZA | 20 DE OUTUBRO<br>DE 2020</p>
-
-			<div class="opcoes">
-				<div class="edit" data-id="14" data-redirect="noticias">
-					<img src="<?php echo BASE_URL; ?>assets/images/iconmonstr-edit-10.svg">
-					<p>EDITAR</p>
-				</div>
-				<div class="delete" data-id="14" data-redirect="noticias">
-					<img src="<?php echo BASE_URL; ?>assets/images/iconmonstr-x-mark-4.svg">
-					<p>EXCLUIR</p>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="noticia-menor-politica">
-		<img src="https://ogimg.infoglobo.com.br/in/23339989-b88-b82/FT1086A/652/80469877_Brazils-new-President-Jair-Bolsonaro-L-and-Brazils-new-Vice-President-Hamilton-Mourao.jpg">
-		<div class="noticia-menor-conteudo-politica">
-			<h2>LOREM IPSUM  DOLOR SIT AMET, CONSECTETUR ADIPISCING</h2>
-			<p>POR HUGO SOUZA | 20 DE OUTUBRO<br>DE 2020</p>
-
-			<div class="opcoes">
-				<div class="edit" data-id="14" data-redirect="noticias">
-					<img src="<?php echo BASE_URL; ?>assets/images/iconmonstr-edit-10.svg">
-					<p>EDITAR</p>
-				</div>
-				<div class="delete" data-id="14" data-redirect="noticias">
-					<img src="<?php echo BASE_URL; ?>assets/images/iconmonstr-x-mark-4.svg">
-					<p>EXCLUIR</p>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="noticia-menor-politica">
-		<img src="https://ogimg.infoglobo.com.br/in/23339989-b88-b82/FT1086A/652/80469877_Brazils-new-President-Jair-Bolsonaro-L-and-Brazils-new-Vice-President-Hamilton-Mourao.jpg">
-		<div class="noticia-menor-conteudo-politica">
-			<h2>LOREM IPSUM  DOLOR SIT AMET, CONSECTETUR ADIPISCING</h2>
-			<p>POR HUGO SOUZA | 20 DE OUTUBRO<br>DE 2020</p>
-
-			<div class="opcoes">
-				<div class="edit" data-id="14" data-redirect="noticias">
-					<img src="<?php echo BASE_URL; ?>assets/images/iconmonstr-edit-10.svg">
-					<p>EDITAR</p>
-				</div>
-				<div class="delete" data-id="14" data-redirect="noticias">
-					<img src="<?php echo BASE_URL; ?>assets/images/iconmonstr-x-mark-4.svg">
-					<p>EXCLUIR</p>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="noticia-menor-politica">
-		<img src="https://ogimg.infoglobo.com.br/in/23339989-b88-b82/FT1086A/652/80469877_Brazils-new-President-Jair-Bolsonaro-L-and-Brazils-new-Vice-President-Hamilton-Mourao.jpg">
-		<div class="noticia-menor-conteudo-politica">
-			<h2>LOREM IPSUM  DOLOR SIT AMET, CONSECTETUR ADIPISCING</h2>
-			<p>POR HUGO SOUZA | 20 DE OUTUBRO<br>DE 2020</p>
-
-			<div class="opcoes">
-				<div class="edit" data-id="14" data-redirect="noticias">
-					<img src="<?php echo BASE_URL; ?>assets/images/iconmonstr-edit-10.svg">
-					<p>EDITAR</p>
-				</div>
-				<div class="delete" data-id="14" data-redirect="noticias">
-					<img src="<?php echo BASE_URL; ?>assets/images/iconmonstr-x-mark-4.svg">
-					<p>EXCLUIR</p>
-				</div>
-			</div>
-		</div>
-	</div>
+	<?php endforeach; ?>
 
 	<!-- Carregar mais -->
 	<div class="carregar-mais">

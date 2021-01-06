@@ -168,7 +168,6 @@ $(document).ready(function(){
 				processData:false,
 				success:function(result){
 					if (result == 1) {
-						$("#add_news input").val("");
 						swal("Sucesso!", "Sua notícia foi publicada com sucesso!", "success");
 					} else {
 						swal("Erro!", "Algo inesperado aconteceu, comunique o admin!", "error");
@@ -176,6 +175,34 @@ $(document).ready(function(){
 				}
 			});
 		}
+
+	});
+
+	// Valida formulário de edição de notícia
+	$("#edit_news").submit(function(e){
+
+		e.preventDefault();
+
+		var id = $("#id").val();
+		var titulo = $("#titulo").val();
+		var descricao = $("#descricao").val();
+		var tags = $("#tags").val();
+		var tipo = $("#tipo").val();
+		var legenda = $("#legenda").val();
+		var noticia = CKEDITOR.instances.noticia.getData();
+
+		$.ajax({
+			type:'POST',
+			url:raiz+'ajax/edit_news',
+			data:{id:id, titulo:titulo, descricao:descricao, tags:tags, tipo:tipo, legenda:legenda, noticia:noticia},
+			success:function(result){
+				if (result == 1) {
+					swal("Opa!", "Parece que este o título está vazio!", "error");
+				} else {
+					swal("Sucesso!", "Os dados foram editados com sucesso!", "success");
+				}
+			}
+		});
 
 	});
 

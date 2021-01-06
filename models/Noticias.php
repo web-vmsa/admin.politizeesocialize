@@ -56,4 +56,78 @@ class Noticias extends model {
 
 	}
 
+	/*
+	* Função de Pegar as notícias do usuário
+	* 
+	* Esta função vai dar um select em todas notícias do usuário do portal
+	*
+	* @param $id_usuario int é o id do autor da notícia
+	* @return string
+	*/
+	public function get_news(){
+
+		$sql = "SELECT usuarios.id, usuarios.nome, noticias.id, noticias.id_usuario, noticias.titulo, noticias.arquivo, noticias.arquivo_prop, noticias.data, DAY(noticias.data) as dia, MONTH(noticias.data) as mes, YEAR(noticias.data) as ano FROM noticias INNER JOIN usuarios ON usuarios.id = noticias.id_usuario WHERE noticias.id_usuario = :id_usuario ORDER BY noticias.id DESC";
+		$sql = $this->db->prepare($sql);
+		$sql->bindValue(':id_usuario', $this->id_usuario);
+		$sql->execute();
+		if ($sql->rowCount() > 0) {
+			return $sql->fetchAll();
+		} else {
+			return false;
+		}
+
+	}
+
+	/*
+	* Função de Verificar se usuário criou a notícia
+	* 
+	* Esta função serve para verificar autenticidade do criador e editor da notícia
+	* Evitando que outro escritores editem notícias de outros
+	*
+	* @param $id_usuario int é o id do autor da notícia
+	* @param $id é o id da notícia
+	* @return string
+	*/
+	public function get_new(){
+
+		$sql = "SELECT * FROM noticias WHERE id_usuario = :id_usuario AND id = :id";
+		$sql = $this->db->prepare($sql);
+		$sql->bindValue(':id', $this->id);
+		$sql->bindValue(':id_usuario', $this->id_usuario);
+		$sql->execute();
+		if ($sql->rowCount() > 0) {
+			return $sql->fetch();
+		} else {
+			return false;
+		}
+
+	}
+
+	/*
+	* Função de Atualizar uma notícia
+	* 
+	* Esta função irá atualizar os dados de uma notícia
+	*
+	* @param $id é o id da notícia
+	* @param $titulo é o título da notícia
+	* @param $descricao é a descrição da notícia
+	* @param $tags são as tags da notícia
+	* @param $arquivo_prop são as propriedades do arquivo
+	* @param $postagem é a postagem da notícia
+	* @return true or false
+	*/
+	public function update_new(){
+
+		$sql = "UPDATE noticias SET titulo = :titulo, descricao = :descricao, tags = :tags, arquivo_prop = :arquivo_prop, postagem = :postagem WHERE id = :id";
+		$sql = $this->db->prepare($sql);
+		$sql->bindValue(':id', $this->id);
+		$sql->bindValue(':titulo', $this->titulo);
+		$sql->bindValue(':descricao', $this->descricao);
+		$sql->bindValue(':tags', $this->tags);
+		$sql->bindValue(':arquivo_prop', $this->arquivo_prop);
+		$sql->bindValue(':postagem', $this->postagem);
+		$sql->execute();
+
+	}
+
 }

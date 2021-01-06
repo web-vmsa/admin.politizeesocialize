@@ -634,6 +634,11 @@ body {
     width: 220px;
     height: 200px;
 }
+.noticia-menor-politica video {
+    width: 220px;
+    height: 200px;
+    background-color: black;
+}
 .noticia-menor-conteudo-politica {
     display: flex;
     flex-direction: column;
