@@ -306,5 +306,166 @@ class ajaxController extends controller {
 		$this->loadView('ajax', $dados);
 
 	}
+
+	public function add_opi(){
+
+		date_default_timezone_set('America/Sao_Paulo');
+
+		$dados = array();
+
+		if (!empty($_POST['titulo'])) {
+			
+			$formatosPermitidos = array("png", "jpeg", "gif", "jpg", "mp4");
+			$extensao = pathinfo($_FILES['anexo_noticia']['name'],  PATHINFO_EXTENSION);
+
+			if (in_array($extensao, $formatosPermitidos)) {
+				
+				if (pathinfo($_FILES['anexo_noticia']['name'],  PATHINFO_EXTENSION) == "mp4") {
+					
+					$pasta = "users/videos/"; 
+					$temporario = $_FILES['anexo_noticia']['tmp_name'];
+					$novoNome = uniqid().".$extensao"; 
+
+					$id_usuario = $_SESSION['id'];
+					$categoria = $_POST['categoria'];
+					$titulo = htmlspecialchars($_POST['titulo']);
+					$descricao = htmlspecialchars($_POST['descricao']);
+					$tags = htmlspecialchars($_POST['tags']);
+
+
+					$semAcentos = array('a', 'a', 'a', 'a', 'a', 'a', 'c', 'e', 'e', 'e', 'e', 'i', 'i', 'i', 'i', 'n', 'o', 'o', 'o', 'o', 'o', 'u', 'u', 'u', 'y', 'A', 'A', 'A', 'A', 'A', 'A', 'C', 'E', 'E', 'E', 'E', 'I', 'I', 'I', 'I', 'N', 'O', 'O', 'O', 'O', 'O', '0', 'U', 'U', 'U', '', '', '', '', '', '');
+
+					$comAcentos = array('à', 'á', 'â', 'ã', 'ä', 'å', 'ç', 'è', 'é', 'ê', 'ë', 'ì', 'í', 'î', 'ï', 'ñ', 'ò', 'ó', 'ô', 'õ', 'ö', 'ù', 'ü', 'ú', 'ÿ', 'À', 'Á', 'Â', 'Ã', 'Ä', 'Å', 'Ç', 'È', 'É', 'Ê', 'Ë', 'Ì', 'Í', 'Î', 'Ï', 'Ñ', 'Ò', 'Ó', 'Ô', 'Õ', 'Ö', 'O', 'Ù', 'Ü', 'Ú', '?', '!', ',', '(', ')', '"');
+
+					$novo_titulo = strtolower(str_replace($comAcentos, $semAcentos, $titulo))."-".str_replace("/","-",date("Y/m/d"));
+					$resultado = preg_replace('/[ -]+/' , '-' , $novo_titulo);
+
+
+					$url = $resultado;
+					$legenda = htmlspecialchars($_POST['legenda']);
+					$arquivo = $novoNome;
+					$arquivo_prop = array(
+						'tipo' => 'video',
+						'legenda' => $legenda
+					);
+					$postagem = $_POST['noticia'];
+					$data = date("Y/m/d H:i:s");
+
+					$nova_opiniao = new Colunas();
+					$nova_opiniao->id_usuario = $id_usuario;
+					$nova_opiniao->categoria = $categoria;
+					$nova_opiniao->titulo = $titulo;
+					$nova_opiniao->descricao = $descricao;
+					$nova_opiniao->tags = $tags;
+					$nova_opiniao->url = $url;
+					$nova_opiniao->arquivo = $arquivo;
+					$nova_opiniao->arquivo_prop = json_encode($arquivo_prop);
+					$nova_opiniao->postagem = $postagem;
+					$nova_opiniao->data = $data;
+					$nova_opiniao->set_opi();
+
+					move_uploaded_file($temporario, $pasta.$novoNome);
+
+					$dados['resultado'] = 1;
+
+				} else {
+
+					$pasta = "users/images/"; 
+					$temporario = $_FILES['anexo_noticia']['tmp_name'];
+					$novoNome = uniqid().".$extensao"; 
+
+					$id_usuario = $_SESSION['id'];
+					$categoria = $_POST['categoria'];
+					$titulo = htmlspecialchars($_POST['titulo']);
+					$descricao = htmlspecialchars($_POST['descricao']);
+					$tags = htmlspecialchars($_POST['tags']);
+
+
+					$semAcentos = array('a', 'a', 'a', 'a', 'a', 'a', 'c', 'e', 'e', 'e', 'e', 'i', 'i', 'i', 'i', 'n', 'o', 'o', 'o', 'o', 'o', 'u', 'u', 'u', 'y', 'A', 'A', 'A', 'A', 'A', 'A', 'C', 'E', 'E', 'E', 'E', 'I', 'I', 'I', 'I', 'N', 'O', 'O', 'O', 'O', 'O', '0', 'U', 'U', 'U', '', '', '', '', '', '');
+
+					$comAcentos = array('à', 'á', 'â', 'ã', 'ä', 'å', 'ç', 'è', 'é', 'ê', 'ë', 'ì', 'í', 'î', 'ï', 'ñ', 'ò', 'ó', 'ô', 'õ', 'ö', 'ù', 'ü', 'ú', 'ÿ', 'À', 'Á', 'Â', 'Ã', 'Ä', 'Å', 'Ç', 'È', 'É', 'Ê', 'Ë', 'Ì', 'Í', 'Î', 'Ï', 'Ñ', 'Ò', 'Ó', 'Ô', 'Õ', 'Ö', 'O', 'Ù', 'Ü', 'Ú', '?', '!', ',', '(', ')', '"');
+
+					$novo_titulo = strtolower(str_replace($comAcentos, $semAcentos, $titulo))."-".str_replace("/","-",date("Y/m/d"));
+					$resultado = preg_replace('/[ -]+/' , '-' , $novo_titulo);
+
+
+					$url = $resultado;
+					$legenda = htmlspecialchars($_POST['legenda']);
+					$arquivo = $novoNome;
+					$arquivo_prop = array(
+						'tipo' => 'imagem',
+						'legenda' => $legenda
+					);
+					$postagem = $_POST['noticia'];
+					$data = date("Y/m/d H:i:s");
+
+					$nova_opiniao = new Colunas();
+					$nova_opiniao->id_usuario = $id_usuario;
+					$nova_opiniao->categoria = $categoria;
+					$nova_opiniao->titulo = $titulo;
+					$nova_opiniao->descricao = $descricao;
+					$nova_opiniao->tags = $tags;
+					$nova_opiniao->url = $url;
+					$nova_opiniao->arquivo = $arquivo;
+					$nova_opiniao->arquivo_prop = json_encode($arquivo_prop);
+					$nova_opiniao->postagem = $postagem;
+					$nova_opiniao->data = $data;
+					$nova_opiniao->set_opi();
+
+					move_uploaded_file($temporario, $pasta.$novoNome);
+
+					$dados['resultado'] = 1;
+
+				}
+
+			} else {
+
+				$dados['resultado'] = 0;
+
+			}
+
+		}
+
+		$this->loadView('ajax', $dados);
+
+	}
+
+	public function edit_opi(){
+
+
+		$dados = array();
+
+		if (!empty($_POST['id']) && !empty($_POST['titulo']) && !empty($_POST['descricao']) && !empty($_POST['tags']) && !empty($_POST['legenda']) && !empty($_POST['noticia']) && !empty($_POST['tipo'])) {
+			
+			$id = $_POST['id'];
+			$titulo = $_POST['titulo'];
+			$descricao = $_POST['descricao'];
+			$tags = $_POST['tags'];
+			$tipo = $_POST['tipo'];
+			$legenda = $_POST['legenda'];
+
+			$arquivo_prop = array(
+				'tipo' => $tipo,
+				'legenda' => $legenda
+			);
+
+			$opi_edit = new Colunas();
+			$opi_edit->id = $id;
+			$opi_edit->titulo = $titulo;
+			$opi_edit->descricao = $descricao;
+			$opi_edit->tags = $tags;
+			$opi_edit->arquivo_prop = json_encode($arquivo_prop);
+			$opi_edit->postagem = $_POST['noticia'];
+			$opi_edit->update_opi();
+
+		} else {
+
+			$dados['resultado'] = 1;
+
+		}
+
+		$this->loadView('ajax', $dados);
+
+	}
 	
 }

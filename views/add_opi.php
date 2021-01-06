@@ -26,7 +26,7 @@
 
 ?>
 
-<form class="conteudo" method="POST" enctype="multipart/form-data" id="add_opi">
+<form class="conteudo" method="POST" enctype="multipart/form-data" id="add_opi" autocomplete="off">
 	<!-- Topo -->
 	<div class="topo">
 		<h2>ADICIONAR OPINIÃO</h2>
@@ -68,21 +68,19 @@
 	<!-- Itens do gerenciamento -->
 	<div class="corpo-conteudo sem-margem">
 		<label for="anexo_noticia" class="card-conteudo card-file">
-			<div class="icon anexo">I</div>
-			<h3>IMAGEM</h3>
-			<p>SELECIONE UM ARQUIVO</p>
+			<div class="icon anexo">A</div>
+			<h3>ANEXO</h3>
+			<p>SELECIONE UM ARQUIVO (VÍDEO ATÉ 30s)</p>
 		</label>
-		<label for="anexo_noticia" class="card-conteudo card-file">
-			<div class="icon anexo">V</div>
-			<h3>VÍDEO</h3>
-			<p>SELECIONE UM ARQUIVO (ATÉ 30s)</p>
-		</label>
-		<label for="capa_anexo" class="card-conteudo card-file">
-			<div class="icon capa-anexo">C</div>
-			<h3>CAPA</h3>
-			<p>CAPA DO VÍDEO</p>
-		</label>
+		<div class="card-conteudo card-input">
+			<div class="icon capa-anexo">L</div>
+			<h3>LEGENDA</h3>
+			<input type="text" name="legenda" id="legenda" placeholder="LEGENDA">
+		</div>
 	</div>
+
+	<input style="display: none;" type="file" id="anexo_noticia" name="anexo_noticia">
+	<input style="display: none;" type="text" id="categoria" name="categoria" value="<?php echo $propriedades->categoria; ?>">
 
 	<!-- Topo -->
 	<div class="topo">
@@ -98,10 +96,6 @@
 			<textarea name="noticia" id="noticia">
 				
 			</textarea>
-
-			<script type="text/javascript">
-				 CKEDITOR.replace( 'noticia' );
-			</script>
 		</div>
 
 		<a href="<?php echo BASE_URL; ?>colunas">
@@ -118,7 +112,4 @@
 			<p>PUBLICAR ESTA OPINIÃO</p>
 		</button>
 	</div>
-
-	<input style="display: none;" type="file" id="anexo_noticia" name="anexo_noticia">
-	<input style="display: none;" type="file" id="capa_anexo" name="capa_anexo">
 </form>

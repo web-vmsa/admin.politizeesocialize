@@ -206,4 +206,77 @@ $(document).ready(function(){
 
 	});
 
+	// Valida formulário de nova opinião
+	$("#add_opi").submit(function(e){
+
+		e.preventDefault();
+
+		var noticia_add = new FormData();
+
+		var arquivos = $('#anexo_noticia')[0].files;
+
+		if (arquivos.length < 0) {
+			swal("Opa!", "Nem todos os campos necessários estão preenchidos!", "warning");
+		} else {
+
+			noticia_add.append('noticia', CKEDITOR.instances.noticia.getData());
+
+			noticia_add.append('legenda', $("#legenda").val());
+
+			noticia_add.append('titulo', $("#titulo").val());
+
+			noticia_add.append('descricao', $("#descricao").val());
+
+			noticia_add.append('tags', $("#tags").val());
+
+			noticia_add.append('categoria', $("#categoria").val());
+
+			noticia_add.append('anexo_noticia', arquivos[0]);
+
+			$.ajax({
+				type:'POST',
+				url:raiz+'ajax/add_opi',
+				data:noticia_add,
+				contentType:false,
+				processData:false,
+				success:function(result){
+					if (result == 1) {
+						swal("Sucesso!", "Sua opinião foi publicada com sucesso!", "success");
+					} else {
+						swal("Erro!", "Algo inesperado aconteceu, comunique o admin!", "error");
+					}
+				}
+			});
+		}
+
+	});
+
+	// Valida formulário de edição de opinIão
+	$("#edit_opi").submit(function(e){
+
+		e.preventDefault();
+
+		var id = $("#id").val();
+		var titulo = $("#titulo").val();
+		var descricao = $("#descricao").val();
+		var tags = $("#tags").val();
+		var tipo = $("#tipo").val();
+		var legenda = $("#legenda").val();
+		var noticia = CKEDITOR.instances.noticia.getData();
+
+		$.ajax({
+			type:'POST',
+			url:raiz+'ajax/edit_opi',
+			data:{id:id, titulo:titulo, descricao:descricao, tags:tags, tipo:tipo, legenda:legenda, noticia:noticia},
+			success:function(result){
+				if (result == 1) {
+					swal("Opa!", "Parece que este o título está vazio!", "error");
+				} else {
+					swal("Sucesso!", "Os dados foram editados com sucesso!", "success");
+				}
+			}
+		});
+
+	});
+
 });
