@@ -29,7 +29,7 @@
 </div>
 
 <!-- Itens do gerenciamento -->
-<form method="POST" enctype="multipart/form-data" class="corpo-conteudo" id="add_team">
+<form method="POST" enctype="multipart/form-data" class="corpo-conteudo" id="add_team" autocomplete="off">
 	<div class="card-conteudo card-input">
 		<div class="icon vermelho">N</div>
 		<h3>NOME</h3>
@@ -42,17 +42,25 @@
 		<p>SELECIONE UM ARQUIVO</p>
 	</label>
 
+	<input style="display: none;" type="file" id="escudo_time" name="escudo_time">
+
 	<div class="card-conteudo card-input">
 		<div class="icon amarelo">A</div>
 		<h3>ALCUNHA</h3>
 		<input type="text" name="alcunha" id="alcunha" placeholder="ALCUNHA">
 	</div>
 
+	<a href="<?php echo BASE_URL; ?>home/painel">
+		<div class="card-conteudo">
+			<div class="icon vermelho">C</div>
+			<h3>CANCELAR</h3>
+			<p>NÃO CRIAR ESTE TIME</p>
+		</div>
+	</a>
+
 	<button type="submit" class="card-conteudo card-file card-button">
 		<div class="icon verde">F</div>
 		<h3>FINALIZAR</h3>
 		<p>CRIAR ESTE TIME</p>
 	</button>
-
-	<input style="display: none;" type="file" id="escudo_time" name="escudo_time">
 </form>

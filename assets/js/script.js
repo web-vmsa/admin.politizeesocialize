@@ -279,4 +279,30 @@ $(document).ready(function(){
 
 	});
 
+	// Valida formulário de criação de time
+	$("#add_team").submit(function(e){
+
+		e.preventDefault();
+
+		var team_form = $("#add_team")[0];
+		var add_team = new FormData(team_form);
+
+		$.ajax({
+			type:'POST',
+			url:raiz+'ajax/add_team',
+			data:add_team,
+			contentType:false,
+			processData:false,
+			success:function(result){
+				if (result == 1) {
+					$("#escudo_time").val("");
+					swal("Sucesso!", "Time adicionado com sucesso!", "success");
+				} else {
+					swal("Opa!", "Algo de errado aconteceu. Comunique o adm!", "error");
+				}
+			}
+		});
+
+	});
+
 });

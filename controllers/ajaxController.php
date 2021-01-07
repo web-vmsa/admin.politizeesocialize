@@ -467,5 +467,49 @@ class ajaxController extends controller {
 		$this->loadView('ajax', $dados);
 
 	}
+
+	public function add_team(){
+
+		$dados = array();
+
+		if ($_FILES['escudo_time']['size'] == 0) {
+
+			$dados['resultado'] = 0;
+
+		} else {
+
+			$formatosPermitidos = array("png", "jpeg", "gif", "jpg");
+			$extensao = pathinfo($_FILES['escudo_time']['name'],  PATHINFO_EXTENSION);
+
+			if (in_array($extensao, $formatosPermitidos)) {
+
+				$pasta = "users/images/"; 
+				$temporario = $_FILES['escudo_time']['tmp_name'];
+				$novoNome = uniqid().".$extensao";
+				$nome = htmlspecialchars($_POST['nome']);
+				$alcunha = htmlspecialchars($_POST['alcunha']);
+
+				move_uploaded_file($temporario, $pasta.$novoNome);
+
+				$equipe = new Equipes();
+				$equipe->nome = $nome;
+				$equipe->escudo = $novoNome;
+				$equipe->alcunha = $alcunha;
+				$equipe->set_team();
+
+				$dados['resultado'] = 1;
+
+			} else {
+
+				$dados['resultado'] = 0;
+
+			}
+
+
+		}
+
+		$this->loadView('ajax', $dados);
+
+	}
 	
 }
