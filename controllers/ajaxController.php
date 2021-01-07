@@ -511,5 +511,132 @@ class ajaxController extends controller {
 		$this->loadView('ajax', $dados);
 
 	}
+
+	public function add_jogo(){
+
+		date_default_timezone_set('America/Sao_Paulo');
+
+		$dados = array();
+
+		if ($_FILES['anexo_jogo']['size'] == 0) {
+
+			$dados['resultado'] = 0;
+
+		} else {
+
+			$campeonato = htmlspecialchars($_POST['campeonato']);
+			$fase = htmlspecialchars($_POST['fase']);
+			$data_oficial = htmlspecialchars($_POST['data']);
+			$time_casa = htmlspecialchars($_POST['time_casa']);
+			$time_fora = htmlspecialchars($_POST['time_fora']);
+
+			$id_usuario = $_SESSION['id'];
+			$categoria = "esportes";
+			$jogo_prop = array(
+				'time_casa' => $time_casa,
+				'time_fora' => $time_fora,
+				'campeonato' => $campeonato,
+				'fase' => $fase,
+				'data_oficial' => $data_oficial
+			);
+			$placar = $_POST['placar'];
+			$status_jogo = $_POST['status'];
+			$titulo = $time_casa." vs ".$time_fora;
+			$descricao = "Jogo válido pela fase ".$fase." do campeonato ".$campeonato." entre ".$time_casa." e ".$time_fora.". A data oficial do jogo é ".$data_oficial;
+			$tags = $time_fora.", ".$time_fora.", ".$campeonato.", ".$data_oficial.", ".$categoria.", ".$fase;
+			$semAcentos = array('a', 'a', 'a', 'a', 'a', 'a', 'c', 'e', 'e', 'e', 'e', 'i', 'i', 'i', 'i', 'n', 'o', 'o', 'o', 'o', 'o', 'u', 'u', 'u', 'y', 'A', 'A', 'A', 'A', 'A', 'A', 'C', 'E', 'E', 'E', 'E', 'I', 'I', 'I', 'I', 'N', 'O', 'O', 'O', 'O', 'O', '0', 'U', 'U', 'U', '', '', '', '', '', '');
+
+			$comAcentos = array('à', 'á', 'â', 'ã', 'ä', 'å', 'ç', 'è', 'é', 'ê', 'ë', 'ì', 'í', 'î', 'ï', 'ñ', 'ò', 'ó', 'ô', 'õ', 'ö', 'ù', 'ü', 'ú', 'ÿ', 'À', 'Á', 'Â', 'Ã', 'Ä', 'Å', 'Ç', 'È', 'É', 'Ê', 'Ë', 'Ì', 'Í', 'Î', 'Ï', 'Ñ', 'Ò', 'Ó', 'Ô', 'Õ', 'Ö', 'O', 'Ù', 'Ü', 'Ú', '?', '!', ',', '(', ')', '"');
+
+			$novo_titulo = strtolower(str_replace($comAcentos, $semAcentos, $titulo))."-".str_replace("/","-",date("Y/m/d"));
+			$resultado = preg_replace('/[ -]+/' , '-' , $novo_titulo);
+
+			$url = $resultado;
+			$lances = $_POST['lances'];
+			$data = date("Y/m/d H:i:s");
+			$legenda = $_POST['legenda'];
+
+			$formatosPermitidos = array("png", "jpeg", "gif", "jpg", "mp4");
+			$extensao = pathinfo($_FILES['anexo_jogo']['name'],  PATHINFO_EXTENSION);
+
+			if (in_array($extensao, $formatosPermitidos)) {
+				
+				if (pathinfo($_FILES['anexo_jogo']['name'],  PATHINFO_EXTENSION) == "mp4") {
+					
+					$pasta = "users/videos/"; 
+					$temporario = $_FILES['anexo_jogo']['tmp_name'];
+					$novoNome = uniqid().".$extensao"; 
+
+					$arquivo = $novoNome;
+					$arquivo_prop = array(
+						'tipo' => 'video', 
+						'legenda' => $legenda
+					);
+
+					move_uploaded_file($temporario, $pasta.$novoNome);
+
+					$novo_jogo = new Jogos();
+					$novo_jogo->id_usuario = $id_usuario;
+					$novo_jogo->categoria = $categoria;
+					$novo_jogo->jogo_prop = json_encode($jogo_prop);
+					$novo_jogo->placar = $placar;
+					$novo_jogo->status_jogo = $status_jogo;
+					$novo_jogo->titulo = $titulo;
+					$novo_jogo->descricao = $descricao;
+					$novo_jogo->tags = $tags;
+					$novo_jogo->url = $url;
+					$novo_jogo->arquivo = $arquivo;
+					$novo_jogo->arquivo_prop = json_encode($arquivo_prop);
+					$novo_jogo->lances = $lances;
+					$novo_jogo->data = $data;
+					$novo_jogo->set_jogo();
+
+					$dados['resultado'] = 1;
+
+				} else {
+
+					$pasta = "users/images/"; 
+					$temporario = $_FILES['anexo_jogo']['tmp_name'];
+					$novoNome = uniqid().".$extensao"; 
+
+					$arquivo = $novoNome;
+					$arquivo_prop = array(
+						'tipo' => 'imagem', 
+						'legenda' => $legenda
+					);
+
+					move_uploaded_file($temporario, $pasta.$novoNome);
+
+					$novo_jogo = new Jogos();
+					$novo_jogo->id_usuario = $id_usuario;
+					$novo_jogo->categoria = $categoria;
+					$novo_jogo->jogo_prop = json_encode($jogo_prop);
+					$novo_jogo->placar = $placar;
+					$novo_jogo->status_jogo = $status_jogo;
+					$novo_jogo->titulo = $titulo;
+					$novo_jogo->descricao = $descricao;
+					$novo_jogo->tags = $tags;
+					$novo_jogo->url = $url;
+					$novo_jogo->arquivo = $arquivo;
+					$novo_jogo->arquivo_prop = json_encode($arquivo_prop);
+					$novo_jogo->lances = $lances;
+					$novo_jogo->data = $data;
+					$novo_jogo->set_jogo();
+
+					$dados['resultado'] = 1;
+
+				}
+
+			} else {
+
+				$dados['resultado'] = 0;
+
+			}
+
+		}
+
+		$this->loadView('ajax', $dados);
+
+	}
 	
 }

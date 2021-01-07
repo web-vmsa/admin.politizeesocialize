@@ -34,4 +34,23 @@ class Equipes extends model {
 
 	}
 
+	/*
+	* Função de pegar os Times
+	* 
+	* Esta função irá buscar todos os times do banco de dados
+	*
+	* @return true of false
+	*/
+	public function get_teams(){
+
+		$sql = "SELECT * FROM equipes";
+		$sql = $this->db->query($sql);
+		if ($sql->rowCount() > 0) {
+			return $sql->fetchAll();
+		} else {
+			return false;
+		}
+
+	}
+
 }

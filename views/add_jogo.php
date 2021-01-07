@@ -36,7 +36,7 @@
 
 ?>
 
-<form class="conteudo" method="POST" enctype="multipart/form-data" id="add_jogo">
+<form class="conteudo" method="POST" enctype="multipart/form-data" id="add_jogo" autocomplete="off">
 	<!-- Topo -->
 	<div class="topo">
 		<h2>ADICIONAR JOGO</h2>
@@ -56,7 +56,14 @@
 			<h3>CAMPEONATO</h3>
 			<select id="campeonato" name="campeonato">
 				<option>SELECIONE</option>
-				<option value="1">BRASILEIRÃO</option>
+
+				<?php 
+					foreach($copas as $campeonato):
+				?>
+
+				<option value="<?php echo $campeonato['alcunha']; ?>"><?php echo utf8_encode($campeonato['alcunha']); ?></option>
+
+				<?php endforeach; ?>
 			</select>
 		</div>
 		
@@ -83,19 +90,23 @@
 		<div class="card-conteudo card-input">
 			<div class="icon amarelo">C</div>
 			<h3>TIME DE CASA</h3>
-			<select id="time_fora" name="time_fora">
+			<select id="time_casa" name="time_casa">
 				<option>SELECIONE</option>
-				<option value="1">FLAMENGO</option>
-				<option value="2">SANTOS</option>
-				<option value="3">GRÊMIO</option>
-				<option value="4">SÃO PAULO</option>
+
+				<?php 
+					foreach($equipes as $times):
+				?>
+
+				<option value="<?php echo $times['nome']; ?>"><?php echo $times['nome']; ?></option>
+
+				<?php endforeach; ?>
 			</select>
 		</div>
 		
 		<div class="card-conteudo card-input">
 			<div class="icon amarelo">P</div>
 			<h3>PLACAR</h3>
-			<input type="text" name="placar" id="placar" placeholder="1-1">
+			<input type="text" name="placar" id="placar" value="0-0">
 		</div>
 
 		<div class="card-conteudo card-input">
@@ -103,25 +114,29 @@
 			<h3>TIME DE FORA</h3>
 			<select id="time_fora" name="time_fora">
 				<option>SELECIONE</option>
-				<option value="1">FLAMENGO</option>
-				<option value="2">SANTOS</option>
-				<option value="3">GRÊMIO</option>
-				<option value="4">SÃO PAULO</option>
+
+				<?php 
+					foreach($equipes as $times):
+				?>
+
+				<option value="<?php echo $times['nome']; ?>"><?php echo $times['nome']; ?></option>
+
+				<?php endforeach; ?>
 			</select>
 		</div>
 
 		<div class="card-conteudo card-input">
 			<div class="icon amarelo">S</div>
 			<h3>STATUS</h3>
-			<select id="status" name="status">
-				<option>SELECIONE</option>
-				<option value="1o tempo">1o TEMPO</option>
-				<option value="Intervalo">INTERVALO</option>
-				<option value="2o tempo">2o TEMPO</option>
-				<option value="Fim de jogo">FIM DE JOGO</option>
-				<option value="Paralisado">PARALISADO</option>
-				<option value="Adiado">ADIADO</option>
-				<option value="Cancelado">CANCELADO</option>
+			<select id="status" name="status">				
+				<option value="Vai começar">Vai começar</option>
+				<option value="1o tempo">1o tempo</option>
+				<option value="Intervalo">Intervalo</option>
+				<option value="2o tempo">2o tempo</option>
+				<option value="2o tempo">Fim de jogo</option>
+				<option value="Paralisado">Paralisado</option>
+				<option value="Adiado">Adiado</option>
+				<option value="Cancelado">Cancelado</option>
 			</select>
 		</div>
 	</div>
@@ -134,21 +149,18 @@
 	<!-- Itens do gerenciamento -->
 	<div class="corpo-conteudo sem-margem">
 		<label for="anexo_jogo" class="card-conteudo card-file">
-			<div class="icon anexo">I</div>
-			<h3>IMAGEM</h3>
-			<p>SELECIONE UM ARQUIVO</p>
+			<div class="icon anexo">A</div>
+			<h3>ANEXO</h3>
+			<p>SELECIONE UM ARQUIVO (VÍDEO ATÉ 30s)</p>
 		</label>
-		<label for="anexo_jogo" class="card-conteudo card-file">
-			<div class="icon anexo">V</div>
-			<h3>VÍDEO</h3>
-			<p>SELECIONE UM ARQUIVO (ATÉ 30s)</p>
-		</label>
-		<label for="capa_anexo" class="card-conteudo card-file">
-			<div class="icon capa-anexo">C</div>
-			<h3>CAPA</h3>
-			<p>CAPA DO VÍDEO</p>
-		</label>
+		<div class="card-conteudo card-input">
+			<div class="icon capa-anexo">L</div>
+			<h3>LEGENDA</h3>
+			<input type="text" name="legenda" id="legenda" placeholder="LEGENDA">
+		</div>
 	</div>
+
+	<input style="display: none;" type="file" id="anexo_jogo" name="anexo_jogo">
 
 	<!-- Topo -->
 	<div class="topo">
@@ -164,10 +176,6 @@
 			<textarea name="lances" id="lances">
 				
 			</textarea>
-
-			<script type="text/javascript">
-				 CKEDITOR.replace( 'lances' );
-			</script>
 		</div>
 
 		<a href="<?php echo BASE_URL; ?>jogos">
@@ -184,7 +192,4 @@
 			<p>PUBLICAR ESTE JOGO</p>
 		</button>
 	</div>
-
-	<input style="display: none;" type="file" id="anexo_jogo" name="anexo_jogo">
-	<input style="display: none;" type="file" id="capa_anexo" name="capa_anexo">
 </form>

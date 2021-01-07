@@ -132,6 +132,7 @@ $(document).ready(function(){
 	});
 
 	CKEDITOR.replace( 'noticia' );
+	CKEDITOR.replace( 'lances' );
 
 	// Valida formulário de nova notícia
 	$("#add_news").submit(function(e){
@@ -302,6 +303,57 @@ $(document).ready(function(){
 				}
 			}
 		});
+
+	});
+
+	// Valida formulário de novo placar ao vivo
+	$("#add_jogo").submit(function(e){
+
+		e.preventDefault();
+
+		var jogo_add = new FormData();
+
+		var arquivos = $('#anexo_jogo')[0].files;
+
+		if (arquivos.length < 0) {
+			swal("Opa!", "Nem todos os campos necessários estão preenchidos!", "warning");
+		} else {
+
+			jogo_add.append('lances', CKEDITOR.instances.lances.getData());
+
+			jogo_add.append('anexo_jogo', arquivos[0]);
+
+			jogo_add.append('legenda', $("#legenda").val());
+
+			jogo_add.append('campeonato', $("#campeonato").val());
+
+			jogo_add.append('fase', $("#fase").val());
+
+			jogo_add.append('data', $("#data").val());
+
+			jogo_add.append('time_fora', $("#time_fora").val());
+
+			jogo_add.append('placar', $("#placar").val());
+
+			jogo_add.append('time_casa', $("#time_casa").val());
+
+			jogo_add.append('status', $("#status").val());
+
+			$.ajax({
+				type:'POST',
+				url:raiz+'ajax/add_jogo',
+				data:jogo_add,
+				contentType:false,
+				processData:false,
+				success:function(result){
+					if (result == 1) {
+						swal("Sucesso!", "Placar ao vivo adicionado com sucesso!", "success");
+					} else {
+						swal("Opa!", "Ocorreu um erro interno! Comunique o adm.", "error");
+					}
+				}
+			});
+		}
 
 	});
 
