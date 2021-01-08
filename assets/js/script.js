@@ -357,4 +357,42 @@ $(document).ready(function(){
 
 	});
 
+	// Valida formulário de edição de placar ao vivo
+	$("#edit_jogo").submit(function(e){
+
+		e.preventDefault();
+
+		var id = $("#id").val();
+
+		var campeonato = $("#campeonato").val();
+		var fase = $("#fase").val();
+		var time_casa = $("#time_casa").val();
+		var placar = $("#placar").val();
+		var time_fora = $("#time_fora").val();
+		var status = $("#status").val();
+		var legenda = $("#legenda").val();
+		var tipo = $("#tipo").val();
+		var lances = CKEDITOR.instances.lances.getData();
+
+		if (id == "" || campeonato == "" || fase == "" || time_casa == "" || time_fora == "" || placar == "" ||
+			status == "" || legenda == "" || tipo == "" || lances == "") {
+			swal("Opa!", "Parece que nem todos os campos estão preenchidos!", "warning");
+		} else {
+			$.ajax({
+				type:'POST',
+				url:raiz+'ajax/edit_jogo',
+				data:{id:id, campeonato:campeonato, fase:fase, time_casa:time_casa, placar:placar,
+					time_fora:time_fora, status:status, legenda:legenda, tipo:tipo, lances:lances},
+				success:function(result){
+					if (result == 1) {
+						swal("Sucesso!", "Placar ao vivo editado com sucesso!", "success");
+					} else {
+						swal("Opa!", "Ocorreu um erro interno! Comunique o adm.", "error");
+					}
+				}
+			});
+		}
+
+	})
+
 });

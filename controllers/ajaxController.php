@@ -637,5 +637,54 @@ class ajaxController extends controller {
 		$this->loadView('ajax', $dados);
 
 	}
+
+	public function edit_jogo(){
+
+		$dados = array();
+
+		if (!empty($_POST['id']) && !empty($_POST['campeonato']) && !empty($_POST['fase']) && !empty($_POST['time_casa']) && !empty($_POST['placar']) && !empty($_POST['time_fora']) && !empty($_POST['status']) && !empty($_POST['legenda']) && !empty($_POST['tipo']) && !empty($_POST['lances'])) {
+
+			$campeonato = $_POST['campeonato'];
+			$fase = $_POST['fase'];
+			$time_casa = $_POST['time_casa'];
+			$placar = $_POST['placar'];
+			$time_fora = $_POST['time_fora'];
+			$legenda = $_POST['legenda'];
+			$tipo = $_POST['tipo'];
+
+			$id = $_POST['id'];
+			$jogo_prop = array(
+				'time_casa' => $time_casa,
+				'time_fora' => $time_fora,
+				'campeonato' => $campeonato,
+				'fase' => $fase
+			);
+			$arquivo_prop = array(
+				'tipo' => $tipo, 
+				'legenda' => $legenda
+			);
+			$lances = $_POST['lances'];
+			$status = $_POST['status'];
+
+			$jogo_edit = new Jogos();
+			$jogo_edit->id = $id;
+			$jogo_edit->jogo_prop = json_encode($jogo_prop);
+			$jogo_edit->placar = $placar;
+			$jogo_edit->status_jogo = $status;
+			$jogo_edit->arquivo_prop = json_encode($arquivo_prop);
+			$jogo_edit->lances = $lances;
+			$jogo_edit->update_jogo();
+			
+			$dados['resultado'] = 1;
+
+		} else {
+
+			$dados['resultado'] = 0;
+
+		}
+
+		$this->loadView('ajax', $dados);
+
+	}
 	
 }

@@ -9,7 +9,21 @@
 		if ($propriedades->categoria == "esportes") {
 			
 			if (in_array("EDIT", $permissoes)) {
-				# code...
+				
+				if ($jogo == true) {
+					
+					$arquivo_prop = json_decode($jogo['arquivo_prop']);
+
+					$jogo_prop = json_decode($jogo['jogo_prop']);
+
+				} else {
+					echo "
+						<script type='text/javascript'>
+							window.location.href='".BASE_URL."jogos'
+						</script>
+					";
+				}
+
 			} else {
 				echo "
 					<script type='text/javascript'>
@@ -36,7 +50,7 @@
 
 ?>
 
-<form class="conteudo" method="POST" enctype="multipart/form-data" id="edit_jogo">
+<form class="conteudo" method="POST" id="edit_jogo" autocomplete="off">
 	<!-- Topo -->
 	<div class="topo">
 		<h2>EDITAR JOGO</h2>
@@ -51,25 +65,29 @@
 
 	<!-- Itens do gerenciamento -->
 	<div class="corpo-conteudo sem-margem">
+
+		<input style="display: none;" type="text" name="id" id="id" value="<?php echo $jogo['id']; ?>">
+
 		<div class="card-conteudo card-input">
 			<div class="icon vermelho">C</div>
 			<h3>CAMPEONATO</h3>
 			<select id="campeonato" name="campeonato">
-				<option>SELECIONE</option>
-				<option value="1">BRASILEIRÃO</option>
+				<option value="<?php echo $jogo_prop->campeonato ?>"><?php echo $jogo_prop->campeonato; ?></option>
+
+				<?php 
+					foreach($copas as $campeonato):
+				?>
+
+				<option value="<?php echo $campeonato['alcunha']; ?>"><?php echo utf8_encode($campeonato['alcunha']); ?></option>
+
+				<?php endforeach; ?>
 			</select>
 		</div>
 		
 		<div class="card-conteudo card-input">
 			<div class="icon vermelho">F</div>
 			<h3>FASE</h3>
-			<input type="text" name="fase" id="fase" placeholder="FASE">
-		</div>
-
-		<div class="card-conteudo card-input">
-			<div class="icon vermelho">D</div>
-			<h3>DATA OFICIAL</h3>
-			<input type="datetime-local" name="data" id="data">
+			<input type="text" name="fase" id="fase" placeholder="FASE" value="<?php echo $jogo_prop->fase; ?>">
 		</div>
 	</div>
 
@@ -83,30 +101,38 @@
 		<div class="card-conteudo card-input">
 			<div class="icon amarelo">C</div>
 			<h3>TIME DE CASA</h3>
-			<select id="time_fora" name="time_fora">
-				<option>SELECIONE</option>
-				<option value="1">FLAMENGO</option>
-				<option value="2">SANTOS</option>
-				<option value="3">GRÊMIO</option>
-				<option value="4">SÃO PAULO</option>
+			<select id="time_casa" name="time_casa">
+				<option value="<?php echo $jogo_prop->time_casa; ?>"><?php echo $jogo_prop->time_casa; ?></option>
+
+				<?php 
+					foreach($equipes as $times):
+				?>
+
+				<option value="<?php echo $times['nome']; ?>"><?php echo $times['nome']; ?></option>
+
+				<?php endforeach; ?>
 			</select>
 		</div>
 		
 		<div class="card-conteudo card-input">
 			<div class="icon amarelo">P</div>
 			<h3>PLACAR</h3>
-			<input type="text" name="placar" id="placar" placeholder="1-1">
+			<input type="text" name="placar" id="placar" placeholder="1-1" value="<?php echo $jogo['placar']; ?>">
 		</div>
 
 		<div class="card-conteudo card-input">
 			<div class="icon amarelo">F</div>
 			<h3>TIME DE FORA</h3>
 			<select id="time_fora" name="time_fora">
-				<option>SELECIONE</option>
-				<option value="1">FLAMENGO</option>
-				<option value="2">SANTOS</option>
-				<option value="3">GRÊMIO</option>
-				<option value="4">SÃO PAULO</option>
+				<option value="<?php echo $jogo_prop->time_fora; ?>"><?php echo $jogo_prop->time_fora ?></option>
+
+				<?php 
+					foreach($equipes as $times):
+				?>
+
+				<option value="<?php echo $times['nome']; ?>"><?php echo $times['nome']; ?></option>
+
+				<?php endforeach; ?>
 			</select>
 		</div>
 
@@ -114,14 +140,16 @@
 			<div class="icon amarelo">S</div>
 			<h3>STATUS</h3>
 			<select id="status" name="status">
-				<option>SELECIONE</option>
-				<option value="1o tempo">1o TEMPO</option>
-				<option value="Intervalo">INTERVALO</option>
-				<option value="2o tempo">2o TEMPO</option>
-				<option value="Fim de jogo">FIM DE JOGO</option>
-				<option value="Paralisado">PARALISADO</option>
-				<option value="Adiado">ADIADO</option>
-				<option value="Cancelado">CANCELADO</option>
+				<option value="<?php echo $jogo['status_jogo']; ?>"><?php echo $jogo['status_jogo']; ?></option>
+
+				<option value="Vai começar">Vai começar</option>
+				<option value="1o tempo">1o tempo</option>
+				<option value="Intervalo">Intervalo</option>
+				<option value="2o tempo">2o tempo</option>
+				<option value="2o tempo">Fim de jogo</option>
+				<option value="Paralisado">Paralisado</option>
+				<option value="Adiado">Adiado</option>
+				<option value="Cancelado">Cancelado</option>
 			</select>
 		</div>
 	</div>
@@ -133,21 +161,14 @@
 
 	<!-- Itens do gerenciamento -->
 	<div class="corpo-conteudo sem-margem">
-		<label for="anexo_jogo" class="card-conteudo card-file">
-			<div class="icon anexo">I</div>
-			<h3>IMAGEM</h3>
-			<p>SELECIONE UM ARQUIVO</p>
-		</label>
-		<label for="anexo_jogo" class="card-conteudo card-file">
-			<div class="icon anexo">V</div>
-			<h3>VÍDEO</h3>
-			<p>SELECIONE UM ARQUIVO (ATÉ 30s)</p>
-		</label>
-		<label for="capa_anexo" class="card-conteudo card-file">
-			<div class="icon capa-anexo">C</div>
-			<h3>CAPA</h3>
-			<p>CAPA DO VÍDEO</p>
-		</label>
+
+		<input style="display: none;" type="text" name="tipo" id="tipo" value="<?php echo $arquivo_prop->tipo; ?>">
+
+		<div class="card-conteudo card-input">
+			<div class="icon capa-anexo">L</div>
+			<h3>LEGENDA</h3>
+			<input type="text" name="legenda" id="legenda" placeholder="LEGENDA" value="<?php echo $arquivo_prop->legenda; ?>">
+		</div>
 	</div>
 
 	<!-- Topo -->
@@ -162,15 +183,22 @@
 			<h3>LANCES</h3>
 
 			<textarea name="lances" id="lances">
-				
+				<?php echo $jogo['lances']; ?>
 			</textarea>
-
-			<script type="text/javascript">
-				 CKEDITOR.replace( 'lances' );
-			</script>
 		</div>
-	</div>
 
-	<input style="display: none;" type="file" id="anexo_jogo" name="anexo_jogo">
-	<input style="display: none;" type="file" id="capa_anexo" name="capa_anexo">
+		<a href="<?php echo BASE_URL; ?>jogos">
+			<div class="card-conteudo">
+				<div class="icon vermelho">C</div>
+				<h3>CANCELAR</h3>
+				<p>NÃO EDITAR O JOGO</p>
+			</div>
+		</a>
+
+		<button type="submit" class="card-conteudo card-file card-button">
+			<div class="icon verde">F</div>
+			<h3>FINALIZAR</h3>
+			<p>EDITAR ESTE JOGO</p>
+		</button>
+	</div>
 </form>

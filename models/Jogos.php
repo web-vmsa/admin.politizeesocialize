@@ -107,4 +107,53 @@ class Jogos extends model {
 
 	}
 
+	/*
+	* Função de Pegar o Jogo
+	* 
+	* Esta função vai selecionar e verificar se o usuário criou o jogo em questão
+	*
+	* @param $id_usuario int é o id do usuário logado
+	* @return true of false
+	*/
+	public function get_jogo(){
+
+		$sql = "SELECT * FROM jogos WHERE id_usuario = :id_usuario";
+		$sql = $this->db->prepare($sql);
+		$sql->bindValue(':id_usuario', $this->id_usuario);
+		$sql->execute();
+		if ($sql->rowCount() > 0) {
+			return $sql->fetch();
+		} else {
+			return false;
+		}
+
+	}
+
+	/*
+	* Função de Editar um Jogo
+	* 
+	* Esta função vai editar um placar ao vivo
+	*
+	* @param $id_ int é o id do jogo
+	* @param $jogo_prop json são os dados do jogo
+	* @param $placar string é o placar do jogo
+	* @param $status_jogo string é o status do jogo
+	* @param $arquivo_prop json são as propriedades do arquivo de anexo
+	* @param $lances string é a descrição maior do jogo
+	* @return true of false
+	*/
+	public function update_jogo(){
+
+		$sql = "UPDATE jogos SET jogo_prop = :jogo_prop, placar = :placar, status_jogo = :status_jogo, arquivo_prop = :arquivo_prop, lances = :lances WHERE id = :id";
+		$sql = $this->db->prepare($sql);
+		$sql->bindValue(':id', $this->id);
+		$sql->bindValue(':jogo_prop', $this->jogo_prop);
+		$sql->bindValue(':placar', $this->placar);
+		$sql->bindValue(':status_jogo', $this->status_jogo);
+		$sql->bindValue(':arquivo_prop', $this->arquivo_prop);
+		$sql->bindValue(':lances', $this->lances);
+		$sql->execute();
+
+	}
+
 }

@@ -45,8 +45,18 @@ class jogosController extends controller {
 		$usuario = new Usuarios();
 		$usuario->id = $_SESSION['id'];
 
+		$jogo = new Jogos();
+		$jogo->id_usuario = $_SESSION['id'];
+
+		$copas = new Jogos();
+
+		$equipes = new Equipes();
+
 		$dados = array(
-			'usuario' => $usuario->get_user()
+			'usuario' => $usuario->get_user(),
+			'jogo' => $jogo->get_jogo(),
+			'copas' => $copas->get_cups(),
+			'equipes' => $equipes->get_teams()
 		);
 
 		$this->loadTemplate('edit_jogo', $dados);
