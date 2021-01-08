@@ -7,8 +7,12 @@ class jogosController extends controller {
 		$usuario = new Usuarios();
 		$usuario->id = $_SESSION['id'];
 
+		$jogos = new Jogos();
+		$jogos->id_usuario = $_SESSION['id'];
+
 		$dados = array(
-			'usuario' => $usuario->get_user()
+			'usuario' => $usuario->get_user(),
+			'jogos' => $jogos->get_jogos()
 		);
 
 		$this->loadTemplate('jogos', $dados);
@@ -60,6 +64,19 @@ class jogosController extends controller {
 		);
 
 		$this->loadTemplate('add_team', $dados);
+
+	}
+
+	public function escudo($nome){
+
+		$escudo = new Equipes();
+		$escudo->nome = $nome;
+
+		$dados = array(
+			'escudo' => $escudo->get_team()
+		);
+
+		$this->loadView('escudo', $dados);		
 
 	}
 	

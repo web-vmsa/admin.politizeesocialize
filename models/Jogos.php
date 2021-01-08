@@ -85,4 +85,26 @@ class Jogos extends model {
 
 	}
 
+	/*
+	* Função de Pegar todos os jogos do usuário
+	* 
+	* Esta função vai selecionar todos os placares que o usuário criou
+	*
+	* @param $id_usuario int é o id do usuário logado
+	* @return true of false
+	*/
+	public function get_jogos(){
+
+		$sql = "SELECT * FROM jogos WHERE id_usuario = :id_usuario ORDER BY id DESC";
+		$sql = $this->db->prepare($sql);
+		$sql->bindValue(':id_usuario', $this->id_usuario);
+		$sql->execute();
+		if ($sql->rowCount() > 0) {
+			return $sql->fetchAll();
+		} else {
+			return false;
+		}
+
+	}
+
 }

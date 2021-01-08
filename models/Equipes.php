@@ -53,4 +53,26 @@ class Equipes extends model {
 
 	}
 
+	/*
+	* Função de pegar o time
+	* 
+	* Esta função irá buscar pelo nome o time correspondente
+	*
+	* @param $nome string é o nome do time
+	* @return true of false
+	*/
+	public function get_team(){
+
+		$sql = "SELECT * FROM equipes WHERE nome = :nome";
+		$sql = $this->db->prepare($sql);
+		$sql->bindValue(':nome', $this->nome);
+		$sql->execute();
+		if ($sql->rowCount() > 0) {
+			return $sql->fetch();
+		} else {
+			return false;
+		}
+
+	}
+
 }

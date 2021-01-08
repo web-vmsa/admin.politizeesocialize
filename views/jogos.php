@@ -64,204 +64,78 @@
 
 <!-- Itens do gerenciamento -->
 <div class="corpo-conteudo jogos-conteudo">
+
+	<?php 
+		foreach($jogos as $dados): 
+
+		$propriedades_jogo = json_decode($dados['jogo_prop']);
+
+		$placar = $dados['placar'];
+
+		$resultado = explode("-", $placar);
+
+		$valor_maior = max($resultado);
+
+		$placar_time_casa = $resultado[0];
+
+		$placar_time_fora = $resultado[1];
+	?>
+
 	<div class="jogo-placar jogo-sem-borda">
 		<div class="status-jogo">
-			<p>Ao vivo</p>
+			<p><?php echo $dados['status_jogo']; ?></p>
 		</div>
 		<div class="campeonato-jogo">
-			<p>Libertadores - Oitavas de Final / Ida</p>
+			<p><?php echo $propriedades_jogo->campeonato; ?> - <?php echo $propriedades_jogo->fase;; ?></p>
 		</div>
 		<div class="placar">
-			<img src="https://a2.espncdn.com/combiner/i?img=%2Fi%2Fteamlogos%2Fsoccer%2F500%2F819.png">
-			<p>Flamengo</p>
-			<h2>2<span>-0</span></h2>
-			<p>Racing SC</p>
-			<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Escudo_de_Racing_Club_%282014%29.svg/1200px-Escudo_de_Racing_Club_%282014%29.svg.png">
+			<img src="<?php echo BASE_URL; ?>jogos/escudo/<?php echo $propriedades_jogo->time_casa; ?>">
+
+			<p><?php echo $propriedades_jogo->time_casa; ?></p>
+				
+			<?php if($placar_time_casa == $valor_maior): ?>
+
+			<h2><?php echo $placar_time_casa; ?><span>-<?php echo $placar_time_fora; ?></span></h2>
+
+			<?php else: ?>
+
+			<h2><span><?php echo $placar_time_casa; ?>-</span><?php echo $placar_time_fora; ?></h2>
+
+			<?php endif; ?>
+
+			<p><?php echo $propriedades_jogo->time_fora; ?></p>
+
+			<img src="<?php echo BASE_URL; ?>jogos/escudo/<?php echo $propriedades_jogo->time_fora; ?>">
 		</div>
 		<div class="data-oficial">
-			<p>12/08/2020 12h30</p>
+			<p><?php echo substr(str_replace(":", "h", $dados['data']), 0,-3);?></p>
 		</div>
 		<div class="opcoes">
-			<div class="edit" data-id="14" data-redirect="jogos">
+
+			<?php if(in_array("EDIT", $permissoes)): ?>
+
+			<div class="edit" data-id="<?php echo $dados['id']; ?>" data-redirect="jogos">
 				<img src="<?php echo BASE_URL; ?>assets/images/iconmonstr-edit-10.svg">
 				<p>EDITAR</p>
 			</div>
-			<div class="delete" data-id="14" data-redirect="jogos">
+
+			<?php endif; ?>
+
+			<?php if(in_array("DEL", $permissoes)): ?>
+
+			<div class="delete" data-id="<?php echo $dados['id']; ?>" data-redirect="jogos">
 				<img src="<?php echo BASE_URL; ?>assets/images/iconmonstr-x-mark-4.svg">
 				<p>EXCLUIR</p>
 			</div>
+
+			<?php endif; ?>
+
 		</div>
 	</div>
 
 	<div class="linha-abaixo-jogo"></div>
 
-	<div class="jogo-placar jogo-sem-borda">
-		<div class="campeonato-jogo">
-			<p>Libertadores - Oitavas de Final / Ida</p>
-		</div>
-		<div class="placar">
-			<img src="https://a2.espncdn.com/combiner/i?img=%2Fi%2Fteamlogos%2Fsoccer%2F500%2F819.png">
-			<p>Flamengo</p>
-			<h2>2<span>-0</span></h2>
-			<p>Racing SC</p>
-			<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Escudo_de_Racing_Club_%282014%29.svg/1200px-Escudo_de_Racing_Club_%282014%29.svg.png">
-		</div>
-		<div class="data-oficial">
-			<p>12/08/2020 12h30</p>
-		</div>
-		<div class="opcoes">
-			<div class="edit" data-id="14" data-redirect="jogos">
-				<img src="<?php echo BASE_URL; ?>assets/images/iconmonstr-edit-10.svg">
-				<p>EDITAR</p>
-			</div>
-			<div class="delete" data-id="14" data-redirect="jogos">
-				<img src="<?php echo BASE_URL; ?>assets/images/iconmonstr-x-mark-4.svg">
-				<p>EXCLUIR</p>
-			</div>
-		</div>
-	</div>
-
-	<div class="linha-abaixo-jogo"></div>
-
-	<div class="jogo-placar jogo-sem-borda">
-		<div class="campeonato-jogo">
-			<p>Libertadores - Oitavas de Final / Ida</p>
-		</div>
-		<div class="placar">
-			<img src="https://a2.espncdn.com/combiner/i?img=%2Fi%2Fteamlogos%2Fsoccer%2F500%2F819.png">
-			<p>Flamengo</p>
-			<h2>2<span>-0</span></h2>
-			<p>Racing SC</p>
-			<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Escudo_de_Racing_Club_%282014%29.svg/1200px-Escudo_de_Racing_Club_%282014%29.svg.png">
-		</div>
-		<div class="data-oficial">
-			<p>12/08/2020 12h30</p>
-		</div>
-		<div class="opcoes">
-			<div class="edit" data-id="14" data-redirect="jogos">
-				<img src="<?php echo BASE_URL; ?>assets/images/iconmonstr-edit-10.svg">
-				<p>EDITAR</p>
-			</div>
-			<div class="delete" data-id="14" data-redirect="jogos">
-				<img src="<?php echo BASE_URL; ?>assets/images/iconmonstr-x-mark-4.svg">
-				<p>EXCLUIR</p>
-			</div>
-		</div>
-	</div>
-
-	<div class="linha-abaixo-jogo"></div>
-
-	<div class="jogo-placar jogo-sem-borda">
-		<div class="campeonato-jogo">
-			<p>Libertadores - Oitavas de Final / Ida</p>
-		</div>
-		<div class="placar">
-			<img src="https://a2.espncdn.com/combiner/i?img=%2Fi%2Fteamlogos%2Fsoccer%2F500%2F819.png">
-			<p>Flamengo</p>
-			<h2>2<span>-0</span></h2>
-			<p>Racing SC</p>
-			<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Escudo_de_Racing_Club_%282014%29.svg/1200px-Escudo_de_Racing_Club_%282014%29.svg.png">
-		</div>
-		<div class="data-oficial">
-			<p>12/08/2020 12h30</p>
-		</div>
-		<div class="opcoes">
-			<div class="edit" data-id="14" data-redirect="jogos">
-				<img src="<?php echo BASE_URL; ?>assets/images/iconmonstr-edit-10.svg">
-				<p>EDITAR</p>
-			</div>
-			<div class="delete" data-id="14" data-redirect="jogos">
-				<img src="<?php echo BASE_URL; ?>assets/images/iconmonstr-x-mark-4.svg">
-				<p>EXCLUIR</p>
-			</div>
-		</div>
-	</div>
-
-	<div class="linha-abaixo-jogo"></div>
-
-	<div class="jogo-placar jogo-sem-borda">
-		<div class="campeonato-jogo">
-			<p>Libertadores - Oitavas de Final / Ida</p>
-		</div>
-		<div class="placar">
-			<img src="https://a2.espncdn.com/combiner/i?img=%2Fi%2Fteamlogos%2Fsoccer%2F500%2F819.png">
-			<p>Flamengo</p>
-			<h2>2<span>-0</span></h2>
-			<p>Racing SC</p>
-			<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Escudo_de_Racing_Club_%282014%29.svg/1200px-Escudo_de_Racing_Club_%282014%29.svg.png">
-		</div>
-		<div class="data-oficial">
-			<p>12/08/2020 12h30</p>
-		</div>
-		<div class="opcoes">
-			<div class="edit" data-id="14" data-redirect="jogos">
-				<img src="<?php echo BASE_URL; ?>assets/images/iconmonstr-edit-10.svg">
-				<p>EDITAR</p>
-			</div>
-			<div class="delete" data-id="14" data-redirect="jogos">
-				<img src="<?php echo BASE_URL; ?>assets/images/iconmonstr-x-mark-4.svg">
-				<p>EXCLUIR</p>
-			</div>
-		</div>
-	</div>
-
-	<div class="linha-abaixo-jogo"></div>
-
-	<div class="jogo-placar jogo-sem-borda">
-		<div class="campeonato-jogo">
-			<p>Libertadores - Oitavas de Final / Ida</p>
-		</div>
-		<div class="placar">
-			<img src="https://a2.espncdn.com/combiner/i?img=%2Fi%2Fteamlogos%2Fsoccer%2F500%2F819.png">
-			<p>Flamengo</p>
-			<h2>2<span>-0</span></h2>
-			<p>Racing SC</p>
-			<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Escudo_de_Racing_Club_%282014%29.svg/1200px-Escudo_de_Racing_Club_%282014%29.svg.png">
-		</div>
-		<div class="data-oficial">
-			<p>12/08/2020 12h30</p>
-		</div>
-		<div class="opcoes">
-			<div class="edit" data-id="14" data-redirect="jogos">
-				<img src="<?php echo BASE_URL; ?>assets/images/iconmonstr-edit-10.svg">
-				<p>EDITAR</p>
-			</div>
-			<div class="delete" data-id="14" data-redirect="jogos">
-				<img src="<?php echo BASE_URL; ?>assets/images/iconmonstr-x-mark-4.svg">
-				<p>EXCLUIR</p>
-			</div>
-		</div>
-	</div>
-
-	<div class="linha-abaixo-jogo"></div>
-
-	<div class="jogo-placar jogo-sem-borda">
-		<div class="campeonato-jogo">
-			<p>Libertadores - Oitavas de Final / Ida</p>
-		</div>
-		<div class="placar">
-			<img src="https://a2.espncdn.com/combiner/i?img=%2Fi%2Fteamlogos%2Fsoccer%2F500%2F819.png">
-			<p>Flamengo</p>
-			<h2>2<span>-0</span></h2>
-			<p>Racing SC</p>
-			<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Escudo_de_Racing_Club_%282014%29.svg/1200px-Escudo_de_Racing_Club_%282014%29.svg.png">
-		</div>
-		<div class="data-oficial">
-			<p>12/08/2020 12h30</p>
-		</div>
-		<div class="opcoes">
-			<div class="edit" data-id="14" data-redirect="jogos">
-				<img src="<?php echo BASE_URL; ?>assets/images/iconmonstr-edit-10.svg">
-				<p>EDITAR</p>
-			</div>
-			<div class="delete" data-id="14" data-redirect="jogos">
-				<img src="<?php echo BASE_URL; ?>assets/images/iconmonstr-x-mark-4.svg">
-				<p>EXCLUIR</p>
-			</div>
-		</div>
-	</div>
-
-	<div class="linha-abaixo-jogo"></div>
+	<?php endforeach; ?>
 
 	<!-- Carregar mais -->
 	<div class="carregar-mais">

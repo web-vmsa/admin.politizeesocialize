@@ -536,8 +536,7 @@ class ajaxController extends controller {
 				'time_casa' => $time_casa,
 				'time_fora' => $time_fora,
 				'campeonato' => $campeonato,
-				'fase' => $fase,
-				'data_oficial' => $data_oficial
+				'fase' => $fase
 			);
 			$placar = $_POST['placar'];
 			$status_jogo = $_POST['status'];
@@ -553,7 +552,7 @@ class ajaxController extends controller {
 
 			$url = $resultado;
 			$lances = $_POST['lances'];
-			$data = date("Y/m/d H:i:s");
+			$data = $_POST['data'];
 			$legenda = $_POST['legenda'];
 
 			$formatosPermitidos = array("png", "jpeg", "gif", "jpg", "mp4");
