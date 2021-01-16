@@ -1256,6 +1256,9 @@ body {
   .card-input input {
     width: 190px;
   }
+  .card-input select {
+    width: 190px;
+  }
   .card-file {
     margin-left: 0;
   }
@@ -1340,5 +1343,138 @@ body {
 @media screen and (max-width: 320px) {
   
   /* CSS */
+  .login form {
+    width: 100%;
+  }
+  .login input {
+    width: 245px;
+  }
+  .login button {
+    width: 270px;
+  }
+  .corpo {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .menu {
+    width: 100%;
+  }
+  .hr {
+    display: none;
+  }
+  .perfil {
+    display: none;
+  }
+  .add {
+    display: none;
+  }
+  .logout {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  .abre-menu {
+    left: 21%;
+  }
+  .corpo-conteudo a {
+    margin-left: 0;
+  }
+  .card-conteudo {
+    width: 235px;
+    height: 235px;
+  }
+  .card-input {
+    margin-left: 0;
+  }
+  .card-input input {
+    width: 190px;
+    margin-top: 18px;
+  }
+  .card-input select {
+    width: 190px;
+    margin-top: 18px;
+  }
+  .card-file {
+    margin-left: 0;
+  }
+  .corpo-conteudo {
+    align-items: center;
+    justify-content: center;
+    margin-left: 18px;
+    margin-right: 18px;
+  }
+  .topo {
+    margin-left: 18px;
+    margin-right: 18px;
+  }
+  .rodape-itens {
+    flex-direction: column;
+  }
+  .item-rodape {
+    padding-bottom: 40px;
+    padding-top: 11px;
+  }
+  .carregar-mais {
+    width: 264px;
+    margin-top: 10px;
+  }
+  .noticia-menor-politica {
+    width: 264px;
+    margin-left: 0;
+  }
+  .linha-abaixo-jogo {
+    width: 264px;
+    margin-top: 10px;
+  }
+  .noticia-menor-politica img {
+    width: 70px;
+    height: 70px;
+  }
+  .noticia-menor-politica video {
+    width: 70px;
+    height: 70px;
+  }
+  .noticia-menor-conteudo-politica h2 {
+    font-size: 26px;
+  }
+  .noticia-menor-conteudo-politica p {
+    display: none;
+  }
+  .opcoes {
+    margin-top: 5px;
+  }
+  .opcoes img {
+    width: 25px; 
+    height: 25px;
+  }
+  .opcoes p {
+    display: block;
+  }
+  .jogo-placar {
+    width: 264px;
+  }
+  .campeonato-jogo {
+    width: 264px;
+  }
+  .jogos-conteudo .opcoes {
+    width: 264px;
+  }
+  .data-oficial {
+    width: 264px;
+  }
+  .placar p {
+    font-size: 16px;
+    width: 90px;
+  }
+  .placar span {
+    font-size: 20px;
+  }
+  .placar h2 {
+    font-size: 22px;
+  }
+  .placar img {
+    width: 25px;
+    height: 25px;
+  }
   
 }
