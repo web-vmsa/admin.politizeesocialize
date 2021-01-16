@@ -136,6 +136,8 @@ class Jogos extends model {
 	*
 	* @param $id_ int é o id do jogo
 	* @param $jogo_prop json são os dados do jogo
+	* @param $titulo string é o título do jogo
+	* @param $descricao string é a descrição do jogo
 	* @param $placar string é o placar do jogo
 	* @param $status_jogo string é o status do jogo
 	* @param $arquivo_prop json são as propriedades do arquivo de anexo
@@ -144,10 +146,12 @@ class Jogos extends model {
 	*/
 	public function update_jogo(){
 
-		$sql = "UPDATE jogos SET jogo_prop = :jogo_prop, placar = :placar, status_jogo = :status_jogo, arquivo_prop = :arquivo_prop, lances = :lances WHERE id = :id";
+		$sql = "UPDATE jogos SET jogo_prop = :jogo_prop, titulo = :titulo, descricao = :descricao, placar = :placar, status_jogo = :status_jogo, arquivo_prop = :arquivo_prop, lances = :lances WHERE id = :id";
 		$sql = $this->db->prepare($sql);
 		$sql->bindValue(':id', $this->id);
 		$sql->bindValue(':jogo_prop', $this->jogo_prop);
+		$sql->bindValue(':titulo', $this->titulo);
+		$sql->bindValue(':descricao', $this->descricao);
 		$sql->bindValue(':placar', $this->placar);
 		$sql->bindValue(':status_jogo', $this->status_jogo);
 		$sql->bindValue(':arquivo_prop', $this->arquivo_prop);

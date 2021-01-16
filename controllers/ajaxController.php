@@ -665,11 +665,15 @@ class ajaxController extends controller {
 			);
 			$lances = $_POST['lances'];
 			$status = $_POST['status'];
+			$titulo = $time_casa." vs ".$time_fora;
+			$descricao = "Jogo válido pela fase ".$fase." do campeonato ".$campeonato." entre ".$time_casa." e ".$time_fora;
 
 			$jogo_edit = new Jogos();
 			$jogo_edit->id = $id;
 			$jogo_edit->jogo_prop = json_encode($jogo_prop);
 			$jogo_edit->placar = $placar;
+			$jogo_edit->titulo = $titulo;
+			$jogo_edit->descricao = $descricao;
 			$jogo_edit->status_jogo = $status;
 			$jogo_edit->arquivo_prop = json_encode($arquivo_prop);
 			$jogo_edit->lances = $lances;

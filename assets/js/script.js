@@ -393,6 +393,6 @@ $(document).ready(function(){
 			});
 		}
 
-	})
+	});
 
 });
