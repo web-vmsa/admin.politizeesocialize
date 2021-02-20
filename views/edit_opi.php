@@ -1,16 +1,14 @@
 <?php
 
-	$propriedades = json_decode($usuario['usuario_prop']); 
-
 	$permissoes = explode(",", $usuario['permissoes']);
 
-	if ($propriedades->nivel == "escritor") {
+	if ($usuario['nivel'] == "escritor") {
 		
 		if (in_array("EDIT", $permissoes)) {
 			
 			if ($opi == true) {
 				
-				$arquivo_prop = json_decode($opi['arquivo_prop']);
+				// Code...
 
 			} else {
 				echo "
@@ -85,10 +83,8 @@
 		<div class="card-conteudo card-input">
 			<div class="icon capa-anexo">L</div>
 			<h3>LEGENDA</h3>
-			<input type="text" name="legenda" id="legenda" placeholder="LEGENDA" value="<?php echo $arquivo_prop->legenda; ?>">
+			<input type="text" name="legenda" id="legenda" placeholder="LEGENDA" value="<?php echo $opi['legenda']; ?>">
 		</div>
-
-		<input style="display: none;" type="text" name="tipo" id="tipo" value="<?php echo $arquivo_prop->tipo; ?>">
 	</div>
 
 	<!-- Topo -->

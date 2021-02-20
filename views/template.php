@@ -23,6 +23,7 @@ if (isset($_SESSION['id']) && !empty($_SESSION['id'])) {
 	<meta name="revisit-after" content="2 days">
 	<meta name="author" content="Victor Miguel">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta property="og:image" content="<?php echo BASE_URL; ?>assets/images/logotipo-politizeesocialize.png">
 
 	<!-- Css -->
 	<link rel="stylesheet" type="text/css" href="<?php echo BASE_URL; ?>assets/css/style.css">
@@ -43,6 +44,17 @@ if (isset($_SESSION['id']) && !empty($_SESSION['id'])) {
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 <body>
+	<!-- Loading -->
+	<div class="fundo-escuro">
+		<div class="loading-box">
+				
+			<img src="<?php echo BASE_URL; ?>assets/images/509258_fb107.gif">
+
+			<h3>CARREGANDO...</h3>
+
+		</div>
+	</div>
+
 	<!-- Abre menu -->
 	<div class="abre-menu">
 		<p>MENU</p>
@@ -89,7 +101,7 @@ if (isset($_SESSION['id']) && !empty($_SESSION['id'])) {
 				<div class="item-rodape notas">
 					<h2>NOTAS DO DESENVOLVEDOR</h2>
 
-					<p>AQUI VAI ALGUMA ANOTAÇÃO INFORMATIVA AOS USUÁRIOS DO SEU PAINEL ADMINISTRATIVO.</p>
+					<p>POR FAVOR, RESPEITEM O LIMITE DO VÍDEO, ATÉ <strong>2 MB</strong>, SE NÃO O VÍDEO NÃO SOBE AO SERVIDOR, E EVITEM TÍTULOS COM ASPAS, É POUCO CHAMATIVO.</p>
 				</div>
 				<div class="item-rodape desenvolvedor">
 					<h2>CONTATO DO DESENVOLVEDOR</h2>

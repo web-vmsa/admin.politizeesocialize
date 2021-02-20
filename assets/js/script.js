@@ -6,8 +6,11 @@ $(document).ready(function(){
 	if (environment == "development") {
 		var raiz = "http://localhost/admin.politizeesocialize/";
 	} else {
-		var raiz = "http://localhost/admin.politizeesocialize/";
+		raiz = "https://www.admin.politizeesocialize.com/";
 	}
+
+	// Esconder loading
+	$(".fundo-escuro").hide();
 
 	// Fechar menu
 	$(".close").on("click", function(){
@@ -60,6 +63,9 @@ $(document).ready(function(){
 		if (email == "" || senha == "") {
 			swal("Opa!", "Insira seu e-mail e senha!", "warning");
 		} else {
+
+			$(".fundo-escuro").show();
+
 			$.ajax({
 				type:'POST',
 				url:raiz+'ajax',
@@ -68,6 +74,7 @@ $(document).ready(function(){
 					if (result == 1) {
 						window.location.href=raiz+'home/painel'
 					} else {
+						$(".fundo-escuro").hide();
 						swal("Opa!", "Parece que este usuário não existe!", "error");
 					}
 				}
@@ -87,16 +94,22 @@ $(document).ready(function(){
 		var email = $("#email").val();
 		var senha = $("#senha").val();
 		var permissoes = $("#permissoes").val();
-		var propriedades = $("#propriedades").val();
+		var nivel = $("#nivel").val();
+		var categoria_id = $("#categoria_id").val();
 
-		if (nome == "" || email == "" || senha == "" || permissoes == "" || propriedades == "") {
+		if (nome == "" || email == "" || senha == "" || permissoes == "" || nivel == "" || categoria_id == "") {
 			swal("Opa!", "Prrencha todos os campos obrigatórios!", "warning");
 		} else {
+
+			$(".fundo-escuro").show();
+
 			$.ajax({
 				type:'POST',
 				url:raiz+'ajax/add_user',
 				data:add_user,
 				success:function(result){
+					$(".fundo-escuro").hide();
+
 					$("#add_user input").val("");
 					swal(result, "Este usuário foi criado com sucesso!", "success");
 				}
@@ -113,6 +126,8 @@ $(document).ready(function(){
 		var form = $("#edit_user")[0];
 		var data_edit = new FormData(form);
 
+		$(".fundo-escuro").show();
+
 		$.ajax({
 			type:'POST',
 			url:raiz+'ajax/edit_user',
@@ -121,9 +136,11 @@ $(document).ready(function(){
 			processData:false,
 			success:function(result){
 				if (result == 1) {
+					$(".fundo-escuro").hide();
 					$("#foto_perfil").val("");
 					swal("Sucesso!", "Sua foto foi editada com sucesso!", "success");
 				} else {
+					$(".fundo-escuro").hide();
 					swal("Sucesso!", "Seus dados foram editados com sucesso!", "success");
 				}
 			}
@@ -157,9 +174,11 @@ $(document).ready(function(){
 
 			noticia_add.append('tags', $("#tags").val());
 
-			noticia_add.append('categoria', $("#categoria").val());
+			noticia_add.append('categoria_id', $("#categoria_id").val());
 
 			noticia_add.append('anexo_noticia', arquivos[0]);
+
+			$(".fundo-escuro").show();
 
 			$.ajax({
 				type:'POST',
@@ -169,8 +188,10 @@ $(document).ready(function(){
 				processData:false,
 				success:function(result){
 					if (result == 1) {
+						$(".fundo-escuro").hide();
 						swal("Sucesso!", "Sua notícia foi publicada com sucesso!", "success");
 					} else {
+						$(".fundo-escuro").hide();
 						swal("Erro!", "Algo inesperado aconteceu, comunique o admin!", "error");
 					}
 				}
@@ -188,18 +209,21 @@ $(document).ready(function(){
 		var titulo = $("#titulo").val();
 		var descricao = $("#descricao").val();
 		var tags = $("#tags").val();
-		var tipo = $("#tipo").val();
 		var legenda = $("#legenda").val();
 		var noticia = CKEDITOR.instances.noticia.getData();
+
+		$(".fundo-escuro").show();
 
 		$.ajax({
 			type:'POST',
 			url:raiz+'ajax/edit_news',
-			data:{id:id, titulo:titulo, descricao:descricao, tags:tags, tipo:tipo, legenda:legenda, noticia:noticia},
+			data:{id:id, titulo:titulo, descricao:descricao, tags:tags, legenda:legenda, noticia:noticia},
 			success:function(result){
 				if (result == 1) {
+					$(".fundo-escuro").hide();
 					swal("Opa!", "Parece que este o título está vazio!", "error");
 				} else {
+					$(".fundo-escuro").hide();
 					swal("Sucesso!", "Os dados foram editados com sucesso!", "success");
 				}
 			}
@@ -230,9 +254,11 @@ $(document).ready(function(){
 
 			noticia_add.append('tags', $("#tags").val());
 
-			noticia_add.append('categoria', $("#categoria").val());
+			noticia_add.append('categoria_id', $("#categoria_id").val());
 
 			noticia_add.append('anexo_noticia', arquivos[0]);
+
+			$(".fundo-escuro").show();
 
 			$.ajax({
 				type:'POST',
@@ -242,8 +268,10 @@ $(document).ready(function(){
 				processData:false,
 				success:function(result){
 					if (result == 1) {
+						$(".fundo-escuro").hide();
 						swal("Sucesso!", "Sua opinião foi publicada com sucesso!", "success");
 					} else {
+						$(".fundo-escuro").hide();
 						swal("Erro!", "Algo inesperado aconteceu, comunique o admin!", "error");
 					}
 				}
@@ -261,18 +289,21 @@ $(document).ready(function(){
 		var titulo = $("#titulo").val();
 		var descricao = $("#descricao").val();
 		var tags = $("#tags").val();
-		var tipo = $("#tipo").val();
 		var legenda = $("#legenda").val();
 		var noticia = CKEDITOR.instances.noticia.getData();
+
+		$(".fundo-escuro").show();
 
 		$.ajax({
 			type:'POST',
 			url:raiz+'ajax/edit_opi',
-			data:{id:id, titulo:titulo, descricao:descricao, tags:tags, tipo:tipo, legenda:legenda, noticia:noticia},
+			data:{id:id, titulo:titulo, descricao:descricao, tags:tags, legenda:legenda, noticia:noticia},
 			success:function(result){
 				if (result == 1) {
+					$(".fundo-escuro").hide();
 					swal("Opa!", "Parece que este o título está vazio!", "error");
 				} else {
+					$(".fundo-escuro").hide();
 					swal("Sucesso!", "Os dados foram editados com sucesso!", "success");
 				}
 			}
@@ -288,6 +319,8 @@ $(document).ready(function(){
 		var team_form = $("#add_team")[0];
 		var add_team = new FormData(team_form);
 
+		$(".fundo-escuro").show();
+
 		$.ajax({
 			type:'POST',
 			url:raiz+'ajax/add_team',
@@ -296,9 +329,11 @@ $(document).ready(function(){
 			processData:false,
 			success:function(result){
 				if (result == 1) {
+					$(".fundo-escuro").hide();
 					$("#escudo_time").val("");
 					swal("Sucesso!", "Time adicionado com sucesso!", "success");
 				} else {
+					$(".fundo-escuro").hide();
 					swal("Opa!", "Algo de errado aconteceu. Comunique o adm!", "error");
 				}
 			}
@@ -339,6 +374,8 @@ $(document).ready(function(){
 
 			jogo_add.append('status', $("#status").val());
 
+			$(".fundo-escuro").show();
+
 			$.ajax({
 				type:'POST',
 				url:raiz+'ajax/add_jogo',
@@ -347,8 +384,10 @@ $(document).ready(function(){
 				processData:false,
 				success:function(result){
 					if (result == 1) {
+						$(".fundo-escuro").hide();
 						swal("Sucesso!", "Placar ao vivo adicionado com sucesso!", "success");
 					} else {
+						$(".fundo-escuro").hide();
 						swal("Opa!", "Ocorreu um erro interno! Comunique o adm.", "error");
 					}
 				}
@@ -371,22 +410,26 @@ $(document).ready(function(){
 		var time_fora = $("#time_fora").val();
 		var status = $("#status").val();
 		var legenda = $("#legenda").val();
-		var tipo = $("#tipo").val();
 		var lances = CKEDITOR.instances.lances.getData();
 
 		if (id == "" || campeonato == "" || fase == "" || time_casa == "" || time_fora == "" || placar == "" ||
-			status == "" || legenda == "" || tipo == "" || lances == "") {
+			status == "" || legenda == "" || lances == "") {
 			swal("Opa!", "Parece que nem todos os campos estão preenchidos!", "warning");
 		} else {
+
+			$(".fundo-escuro").show();
+
 			$.ajax({
 				type:'POST',
 				url:raiz+'ajax/edit_jogo',
 				data:{id:id, campeonato:campeonato, fase:fase, time_casa:time_casa, placar:placar,
-					time_fora:time_fora, status:status, legenda:legenda, tipo:tipo, lances:lances},
+					time_fora:time_fora, status:status, legenda:legenda, lances:lances},
 				success:function(result){
 					if (result == 1) {
+						$(".fundo-escuro").hide();
 						swal("Sucesso!", "Placar ao vivo editado com sucesso!", "success");
 					} else {
+						$(".fundo-escuro").hide();
 						swal("Opa!", "Ocorreu um erro interno! Comunique o adm.", "error");
 					}
 				}

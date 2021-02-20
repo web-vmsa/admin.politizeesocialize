@@ -1,12 +1,10 @@
 <?php
 
-	$propriedades = json_decode($usuario['usuario_prop']); 
-
 	$permissoes = explode(",", $usuario['permissoes']);
 
-	if ($propriedades->nivel == "escritor") {
+	if ($usuario['nivel'] == "escritor") {
 		
-		if ($propriedades->categoria == "esportes") {
+		if ($usuario['categoria_id'] == 3) {
 			
 			if (in_array("ADD", $permissoes)) {
 				# code...
@@ -129,11 +127,12 @@
 			<div class="icon amarelo">S</div>
 			<h3>STATUS</h3>
 			<select id="status" name="status">				
+				<option value="Agendado">Agendado</option>
 				<option value="Vai começar">Vai começar</option>
 				<option value="1o tempo">1o tempo</option>
 				<option value="Intervalo">Intervalo</option>
 				<option value="2o tempo">2o tempo</option>
-				<option value="2o tempo">Fim de jogo</option>
+				<option value="Fim de jogo">Fim de jogo</option>
 				<option value="Paralisado">Paralisado</option>
 				<option value="Adiado">Adiado</option>
 				<option value="Cancelado">Cancelado</option>
@@ -151,7 +150,7 @@
 		<label for="anexo_jogo" class="card-conteudo card-file">
 			<div class="icon anexo">A</div>
 			<h3>ANEXO</h3>
-			<p>SELECIONE UM ARQUIVO (VÍDEO ATÉ 30s)</p>
+			<p>SELECIONE UM ARQUIVO (VÍDEO ATÉ 2 MB)</p>
 		</label>
 		<div class="card-conteudo card-input">
 			<div class="icon capa-anexo">L</div>

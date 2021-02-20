@@ -1,10 +1,8 @@
 <?php
 
-	$propriedades = json_decode($usuario['usuario_prop']); 
-
 	$permissoes = explode(",", $usuario['permissoes']);
 
-	if ($propriedades->nivel == "adm") {
+	if ($usuario['nivel'] == "adm") {
 		
 		if (in_array("ADD", $permissoes)) {
 			# code...
@@ -65,9 +63,15 @@
 	</div>
 
 	<div class="card-conteudo card-input">
-		<div class="icon cinza-escuro">P</div>
-		<h3>PROPRIEDADES</h3>
-		<input type="text" name="propriedades" id="propriedades" placeholder="PROPRIEDADES">
+		<div class="icon cinza-escuro">N</div>
+		<h3>NÍVEL</h3>
+		<input type="text" name="nivel" id="nivel" placeholder="NÍVEL">
+	</div>
+
+	<div class="card-conteudo card-input">
+		<div class="icon vermelho">C</div>
+		<h3>CATEGORIA</h3>
+		<input type="text" name="categoria_id" id="categoria_id" placeholder="CATEGORIA_ID">
 	</div>
 
 	<button type="submit" class="card-conteudo card-file card-button">

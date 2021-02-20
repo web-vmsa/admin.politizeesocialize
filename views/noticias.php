@@ -1,10 +1,8 @@
 <?php
 
-	$propriedades = json_decode($usuario['usuario_prop']); 
-
 	$permissoes = explode(",", $usuario['permissoes']);
 
-	if ($propriedades->nivel == "escritor") {
+	if ($usuario['nivel'] == "escritor") {
 		# code....
 	} else {
 		echo "
@@ -55,17 +53,15 @@
 
 	<?php 
 		foreach($noticias as $dados):
-
-		$arquivo_prop = json_decode($dados['arquivo_prop']);
 	?>
 
 	<div class="noticia-menor-politica">
 		
-		<?php if($arquivo_prop->tipo == "imagem"): ?>
+		<?php if($dados['tipo'] == "imagem"): ?>
 
 		<img src="<?php echo BASE_URL; ?>users/images/<?php echo $dados['arquivo']; ?>">
 
-		<?php elseif($arquivo_prop->tipo == "video"): ?>
+		<?php elseif($dados['tipo'] == "video"): ?>
 
 		<video>
 			<source src="<?php echo BASE_URL; ?>users/videos/<?php echo $dados['arquivo']; ?>" type="video/mp4">
@@ -125,10 +121,11 @@
 
 	<?php endforeach; ?>
 
-	<!-- Carregar mais -->
+	<!-- Carregar mais 
 	<div class="carregar-mais">
 		<button id="load-more-news">
 			CARREGAR MAIS
 		</button>
 	</div>
+-->
 </div>

@@ -1,6 +1,4 @@
 <?php 
-	
-	$propriedades = json_decode($usuario['usuario_prop']); 
 
 	$permissoes = explode(",", $usuario['permissoes']);
 
@@ -21,7 +19,7 @@
 		</div>
 	</a>
 
-	<?php if($propriedades->nivel == "escritor"): ?>
+	<?php if($usuario['nivel'] == "escritor"): ?>
 
 	<a href="<?php echo BASE_URL; ?>noticias">
 		<div class="card-conteudo">
@@ -31,7 +29,7 @@
 		</div>
 	</a>
 
-	<?php if($propriedades->categoria == "esportes"): ?>
+	<?php if($usuario['categoria_id'] == 3): ?>
 
 	<a href="<?php echo BASE_URL; ?>jogos">
 		<div class="card-conteudo">
@@ -53,7 +51,7 @@
 
 	<?php endif; ?>
 
-	<?php if($propriedades->nivel == "adm"): ?>
+	<?php if($usuario['nivel'] == "adm"): ?>
 
 	<a href="<?php echo BASE_URL; ?>jogos/team">
 		<div class="card-conteudo">

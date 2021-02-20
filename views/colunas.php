@@ -1,10 +1,8 @@
 <?php
 
-	$propriedades = json_decode($usuario['usuario_prop']); 
-
 	$permissoes = explode(",", $usuario['permissoes']);
 
-	if ($propriedades->nivel == "escritor") {
+	if ($usuario['nivel'] == "escritor") {
 		# code....
 	} else {
 		echo "
@@ -30,6 +28,9 @@
 
 <!-- Itens do gerenciamento -->
 <div class="corpo-conteudo sem-margem">
+
+	<?php if(in_array("ADD", $permissoes)): ?>
+
 	<a href="<?php echo BASE_URL; ?>colunas/add">
 		<div class="card-conteudo">
 			<div class="icon vermelho">O</div>
@@ -37,6 +38,9 @@
 			<p>NOVA OPINiÃO AO PORTAL</p>
 		</div>
 	</a>
+
+	<?php endif; ?>
+	
 </div>
 
 <!-- Topo -->
@@ -48,17 +52,15 @@
 <div class="corpo-conteudo">
 	<?php 
 		foreach($opinioes as $dados):
-
-		$arquivo_prop = json_decode($dados['arquivo_prop']);
 	?>
 
 	<div class="noticia-menor-politica">
 		
-		<?php if($arquivo_prop->tipo == "imagem"): ?>
+		<?php if($dados['tipo'] == "imagem"): ?>
 
 		<img src="<?php echo BASE_URL; ?>users/images/<?php echo $dados['arquivo']; ?>">
 
-		<?php elseif($arquivo_prop->tipo == "video"): ?>
+		<?php elseif($dados['tipo'] == "video"): ?>
 
 		<video>
 			<source src="<?php echo BASE_URL; ?>users/videos/<?php echo $dados['arquivo']; ?>" type="video/mp4">
@@ -118,10 +120,11 @@
 
 	<?php endforeach; ?>
 
-	<!-- Carregar mais -->
+	<!-- Carregar mais 
 	<div class="carregar-mais">
 		<button id="load-more-news">
 			CARREGAR MAIS
 		</button>
 	</div>
+-->
 </div>

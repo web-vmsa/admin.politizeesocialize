@@ -23,6 +23,7 @@ if (isset($_SESSION['id']) && !empty($_SESSION['id'])) {
 	<meta name="revisit-after" content="2 days">
 	<meta name="author" content="Victor Miguel">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta property="og:image" content="<?php echo BASE_URL; ?>assets/images/logotipo-politizeesocialize.png">
 
 	<!-- Css -->
 	<link rel="stylesheet" type="text/css" href="<?php echo BASE_URL; ?>assets/css/style.css">
@@ -40,6 +41,17 @@ if (isset($_SESSION['id']) && !empty($_SESSION['id'])) {
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 <body>
+	<!-- Loading -->
+	<div class="fundo-escuro">
+		<div class="loading-box">
+				
+			<img src="<?php echo BASE_URL; ?>assets/images/509258_fb107.gif">
+
+			<h3>CARREGANDO...</h3>
+
+		</div>
+	</div>
+
 	<!-- Login -->
 	<div class="login">
 		<img src="<?php echo BASE_URL; ?>assets/images/favicon.png">

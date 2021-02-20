@@ -16,7 +16,8 @@ class Usuarios extends model {
 	public $email;
 	public $senha;
 	public $permissoes;
-	public $propriedades;
+	public $nivel;
+	public $categoria_id;
 
 	/*
 	* Função Login
@@ -54,7 +55,7 @@ class Usuarios extends model {
 	*/
 	public function get_user(){
 
-		$sql = "SELECT * FROM usuarios WHERE id = :id";
+		$sql = "SELECT usuarios.id, usuarios.nome as nome_usuario, usuarios.nivel, usuarios.categoria_id, usuarios.email, usuarios.social, usuarios.biografia, usuarios.permissoes, usuarios.nivel, usuarios.categoria_id, categorias.id, categorias.nome FROM usuarios INNER JOIN categorias ON usuarios.categoria_id = categorias.id WHERE usuarios.id = :id";
 		$sql = $this->db->prepare($sql);
 		$sql->bindValue(":id", $this->id);
 		$sql->execute();
@@ -74,19 +75,21 @@ class Usuarios extends model {
 	* @param $email string é o email do usuário
 	* @param $senha string é a senha do usuário
 	* @param $permissoes string são as permissões do usuário
-	* @param $propriedades string são as propriedades do usuário
+	* @param $nivel string é o nível do usuário
+	* @param $categoria_id int é a categoria do usuário
 	* @return true or false
 	*/
 	public function add_user(){
 
-		$sql = "INSERT INTO usuarios SET nome = :nome, social = :social, email = :email, senha = :senha, permissoes = :permissoes, usuario_prop = :propriedades, status = '1'";
+		$sql = "INSERT INTO usuarios SET nome = :nome, social = :social, email = :email, senha = :senha, permissoes = :permissoes, nivel = :nivel, categoria_id = :categoria_id, status = '1'";
 		$sql = $this->db->prepare($sql);
 		$sql->bindValue(':nome', $this->nome);
 		$sql->bindValue(':social', $this->social);
 		$sql->bindValue(':email', $this->email);
 		$sql->bindValue(':senha', $this->senha);
 		$sql->bindValue(':permissoes', $this->permissoes);
-		$sql->bindValue(':propriedades', $this->propriedades);
+		$sql->bindValue(':nivel', $this->nivel);
+		$sql->bindValue(':categoria_id', $this->categoria_id);
 		$sql->execute();
 
 	}

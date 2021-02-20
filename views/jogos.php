@@ -1,12 +1,10 @@
 <?php
 
-	$propriedades = json_decode($usuario['usuario_prop']); 
-
 	$permissoes = explode(",", $usuario['permissoes']);
 
-	if ($propriedades->nivel == "escritor") {
+	if ($usuario['nivel'] == "escritor") {
 		
-		if ($propriedades->categoria == "esportes") {
+		if ($usuario['categoria_id'] == 3) {
 			
 			# code...
 
@@ -68,8 +66,6 @@
 	<?php 
 		foreach($jogos as $dados): 
 
-		$propriedades_jogo = json_decode($dados['jogo_prop']);
-
 		$placar = $dados['placar'];
 
 		$resultado = explode("-", $placar);
@@ -82,30 +78,44 @@
 	?>
 
 	<div class="jogo-placar jogo-sem-borda">
+
+		<?php if($dados['status_jogo'] != "Fim de jogo"): ?>
+
 		<div class="status-jogo">
 			<p><?php echo $dados['status_jogo']; ?></p>
 		</div>
+
+		<?php endif; ?>
+
 		<div class="campeonato-jogo">
-			<p><?php echo $propriedades_jogo->campeonato; ?> - <?php echo $propriedades_jogo->fase;; ?></p>
+			<p><?php echo $dados['campeonato']; ?> - <?php echo $dados['fase']; ?></p>
 		</div>
 		<div class="placar">
-			<img src="<?php echo BASE_URL; ?>jogos/escudo/<?php echo $propriedades_jogo->time_casa; ?>">
+			<img src="<?php echo BASE_URL; ?>jogos/escudo/<?php echo $dados['time_casa']; ?>">
 
-			<p><?php echo $propriedades_jogo->time_casa; ?></p>
+			<p><?php echo $dados['time_casa']; ?></p>
 				
-			<?php if($placar_time_casa == $valor_maior): ?>
+			<?php if($placar_time_casa == $valor_maior && $placar_time_fora == $valor_maior): ?>
 
-			<h2><?php echo $placar_time_casa; ?><span>-<?php echo $placar_time_fora; ?></span></h2>
+				<h2><span><?php echo $placar_time_casa; ?>-<?php echo $placar_time_fora; ?></span></h2>
 
 			<?php else: ?>
 
-			<h2><span><?php echo $placar_time_casa; ?>-</span><?php echo $placar_time_fora; ?></h2>
+				<?php if($placar_time_casa == $valor_maior): ?>
+
+				<h2><?php echo $placar_time_casa; ?><span>-<?php echo $placar_time_fora; ?></span></h2>
+
+				<?php else: ?>
+
+				<h2><span><?php echo $placar_time_casa; ?>-</span><?php echo $placar_time_fora; ?></h2>
+
+				<?php endif; ?>
 
 			<?php endif; ?>
 
-			<p><?php echo $propriedades_jogo->time_fora; ?></p>
+			<p><?php echo $dados['time_fora']; ?></p>
 
-			<img src="<?php echo BASE_URL; ?>jogos/escudo/<?php echo $propriedades_jogo->time_fora; ?>">
+			<img src="<?php echo BASE_URL; ?>jogos/escudo/<?php echo $dados['time_fora']; ?>">
 		</div>
 		<div class="data-oficial">
 			<p><?php echo substr(str_replace(":", "h", $dados['data']), 0,-3);?></p>
@@ -137,10 +147,11 @@
 
 	<?php endforeach; ?>
 
-	<!-- Carregar mais -->
+	<!-- Carregar mais 
 	<div class="carregar-mais">
 		<button id="load-more-games">
 			CARREGAR MAIS
 		</button>
 	</div>
+-->
 </div>

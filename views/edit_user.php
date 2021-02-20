@@ -21,7 +21,7 @@
 	<div class="card-conteudo card-input">
 		<div class="icon verde">N</div>
 		<h3>NOME</h3>
-		<input type="text" name="nome" id="nome" value="<?php echo $usuario['nome']; ?>" placeholder="SEU NOME">
+		<input type="text" name="nome" id="nome" value="<?php echo $usuario['nome_usuario']; ?>" placeholder="SEU NOME">
 	</div>
 	<label for="foto_perfil" class="card-conteudo card-file">
 		<div class="icon foto">F</div>

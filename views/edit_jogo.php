@@ -1,20 +1,16 @@
 <?php
 
-	$propriedades = json_decode($usuario['usuario_prop']); 
-
 	$permissoes = explode(",", $usuario['permissoes']);
 
-	if ($propriedades->nivel == "escritor") {
+	if ($usuario['nivel'] == "escritor") {
 		
-		if ($propriedades->categoria == "esportes") {
+		if ($usuario['categoria_id'] == 3) {
 			
 			if (in_array("EDIT", $permissoes)) {
 				
 				if ($jogo == true) {
 					
-					$arquivo_prop = json_decode($jogo['arquivo_prop']);
-
-					$jogo_prop = json_decode($jogo['jogo_prop']);
+					// Code...
 
 				} else {
 					echo "
@@ -72,7 +68,7 @@
 			<div class="icon vermelho">C</div>
 			<h3>CAMPEONATO</h3>
 			<select id="campeonato" name="campeonato">
-				<option value="<?php echo $jogo_prop->campeonato ?>"><?php echo $jogo_prop->campeonato; ?></option>
+				<option value="<?php echo $jogo['campeonato']; ?>"><?php echo $jogo['campeonato']; ?></option>
 
 				<?php 
 					foreach($copas as $campeonato):
@@ -87,7 +83,7 @@
 		<div class="card-conteudo card-input">
 			<div class="icon vermelho">F</div>
 			<h3>FASE</h3>
-			<input type="text" name="fase" id="fase" placeholder="FASE" value="<?php echo $jogo_prop->fase; ?>">
+			<input type="text" name="fase" id="fase" placeholder="FASE" value="<?php echo $jogo['fase']; ?>">
 		</div>
 	</div>
 
@@ -102,7 +98,7 @@
 			<div class="icon amarelo">C</div>
 			<h3>TIME DE CASA</h3>
 			<select id="time_casa" name="time_casa">
-				<option value="<?php echo $jogo_prop->time_casa; ?>"><?php echo $jogo_prop->time_casa; ?></option>
+				<option value="<?php echo $jogo['time_casa']; ?>"><?php echo $jogo['time_casa']; ?></option>
 
 				<?php 
 					foreach($equipes as $times):
@@ -124,7 +120,7 @@
 			<div class="icon amarelo">F</div>
 			<h3>TIME DE FORA</h3>
 			<select id="time_fora" name="time_fora">
-				<option value="<?php echo $jogo_prop->time_fora; ?>"><?php echo $jogo_prop->time_fora ?></option>
+				<option value="<?php echo $jogo['time_fora']; ?>"><?php echo $jogo['time_fora']; ?></option>
 
 				<?php 
 					foreach($equipes as $times):
@@ -142,11 +138,12 @@
 			<select id="status" name="status">
 				<option value="<?php echo $jogo['status_jogo']; ?>"><?php echo $jogo['status_jogo']; ?></option>
 
+				<option value="Agendado">Agendado</option>
 				<option value="Vai começar">Vai começar</option>
 				<option value="1o tempo">1o tempo</option>
 				<option value="Intervalo">Intervalo</option>
 				<option value="2o tempo">2o tempo</option>
-				<option value="2o tempo">Fim de jogo</option>
+				<option value="Fim de jogo">Fim de jogo</option>
 				<option value="Paralisado">Paralisado</option>
 				<option value="Adiado">Adiado</option>
 				<option value="Cancelado">Cancelado</option>
@@ -162,12 +159,10 @@
 	<!-- Itens do gerenciamento -->
 	<div class="corpo-conteudo sem-margem">
 
-		<input style="display: none;" type="text" name="tipo" id="tipo" value="<?php echo $arquivo_prop->tipo; ?>">
-
 		<div class="card-conteudo card-input">
 			<div class="icon capa-anexo">L</div>
 			<h3>LEGENDA</h3>
-			<input type="text" name="legenda" id="legenda" placeholder="LEGENDA" value="<?php echo $arquivo_prop->legenda; ?>">
+			<input type="text" name="legenda" id="legenda" placeholder="LEGENDA" value="<?php echo $jogo['legenda']; ?>">
 		</div>
 	</div>
 

@@ -39,13 +39,14 @@ class jogosController extends controller {
 
 	}
 
-	public function edit(){
+	public function edit($id){
 
 
 		$usuario = new Usuarios();
 		$usuario->id = $_SESSION['id'];
 
 		$jogo = new Jogos();
+		$jogo->id = $id;
 		$jogo->id_usuario = $_SESSION['id'];
 
 		$copas = new Jogos();

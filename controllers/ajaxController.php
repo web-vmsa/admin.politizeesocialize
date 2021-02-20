@@ -35,14 +35,15 @@ class ajaxController extends controller {
 
 		$dados = array();
 
-		if (!empty($_POST['nome']) && !empty($_POST['email']) && !empty($_POST['senha']) && !empty($_POST['permissoes']) && !empty($_POST['propriedades'])) {
+		if (!empty($_POST['nome']) && !empty($_POST['email']) && !empty($_POST['senha']) && !empty($_POST['permissoes']) && !empty($_POST['nivel']) && !empty($_POST['categoria_id'])) {
 			
 			$nome = $_POST['nome'];
 			$social = '{"instagram": "", "facebook": "", "youtube": "", "linkedin": ""}';
 			$email = $_POST['email'];
 			$senha = md5($_POST['senha']);
 			$permissoes = $_POST['permissoes'];
-			$propriedades = $_POST['propriedades'];
+			$nivel = $_POST['nivel'];
+			$categoria_id = $_POST['categoria_id'];
 
 			$novo_user = new Usuarios();
 			$novo_user->nome = $nome;
@@ -50,7 +51,8 @@ class ajaxController extends controller {
 			$novo_user->email = $email;
 			$novo_user->senha = $senha;
 			$novo_user->permissoes = $permissoes;
-			$novo_user->propriedades = $propriedades;
+			$novo_user->nivel = $nivel;
+			$novo_user->categoria_id = $categoria_id;
 			$novo_user->add_user();
 
 			$dados['resultado'] = "Sucesso!";
@@ -95,7 +97,7 @@ class ajaxController extends controller {
 
 		} else {
 
-			$formatosPermitidos = array("png", "jpeg", "gif", "jpg");
+			$formatosPermitidos = array("png", "jpeg", "gif", "jpg", "svg");
 			$extensao = pathinfo($_FILES['foto_perfil']['name'],  PATHINFO_EXTENSION);
 
 			if (in_array($extensao, $formatosPermitidos)) { 
@@ -154,7 +156,7 @@ class ajaxController extends controller {
 
 		if (!empty($_POST['titulo'])) {
 			
-			$formatosPermitidos = array("png", "jpeg", "gif", "jpg", "mp4");
+			$formatosPermitidos = array("png", "jpeg", "gif", "jpg", "mp4", "svg");
 			$extensao = pathinfo($_FILES['anexo_noticia']['name'],  PATHINFO_EXTENSION);
 
 			if (in_array($extensao, $formatosPermitidos)) {
@@ -166,15 +168,15 @@ class ajaxController extends controller {
 					$novoNome = uniqid().".$extensao"; 
 
 					$id_usuario = $_SESSION['id'];
-					$categoria = $_POST['categoria'];
+					$categoria_id = $_POST['categoria_id'];
 					$titulo = htmlspecialchars($_POST['titulo']);
 					$descricao = htmlspecialchars($_POST['descricao']);
 					$tags = htmlspecialchars($_POST['tags']);
 
 
-					$semAcentos = array('a', 'a', 'a', 'a', 'a', 'a', 'c', 'e', 'e', 'e', 'e', 'i', 'i', 'i', 'i', 'n', 'o', 'o', 'o', 'o', 'o', 'u', 'u', 'u', 'y', 'A', 'A', 'A', 'A', 'A', 'A', 'C', 'E', 'E', 'E', 'E', 'I', 'I', 'I', 'I', 'N', 'O', 'O', 'O', 'O', 'O', '0', 'U', 'U', 'U', '', '', '', '', '', '');
+					$semAcentos = array('a', 'a', 'a', 'a', 'a', 'a', 'c', 'e', 'e', 'e', 'e', 'i', 'i', 'i', 'i', 'n', 'o', 'o', 'o', 'o', 'o', 'u', 'u', 'u', 'y', 'A', 'A', 'A', 'A', 'A', 'A', 'C', 'E', 'E', 'E', 'E', 'I', 'I', 'I', 'I', 'N', 'O', 'O', 'O', 'O', 'O', '0', 'U', 'U', 'U', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-');
 
-					$comAcentos = array('à', 'á', 'â', 'ã', 'ä', 'å', 'ç', 'è', 'é', 'ê', 'ë', 'ì', 'í', 'î', 'ï', 'ñ', 'ò', 'ó', 'ô', 'õ', 'ö', 'ù', 'ü', 'ú', 'ÿ', 'À', 'Á', 'Â', 'Ã', 'Ä', 'Å', 'Ç', 'È', 'É', 'Ê', 'Ë', 'Ì', 'Í', 'Î', 'Ï', 'Ñ', 'Ò', 'Ó', 'Ô', 'Õ', 'Ö', 'O', 'Ù', 'Ü', 'Ú', '?', '!', ',', '(', ')', '"');
+					$comAcentos = array('à', 'á', 'â', 'ã', 'ä', 'å', 'ç', 'è', 'é', 'ê', 'ë', 'ì', 'í', 'î', 'ï', 'ñ', 'ò', 'ó', 'ô', 'õ', 'ö', 'ù', 'ü', 'ú', 'ÿ', 'À', 'Á', 'Â', 'Ã', 'Ä', 'Å', 'Ç', 'È', 'É', 'Ê', 'Ë', 'Ì', 'Í', 'Î', 'Ï', 'Ñ', 'Ò', 'Ó', 'Ô', 'Õ', 'Ö', 'O', 'Ù', 'Ü', 'Ú', '?', '!', ',', '(', ')', '"', '"', ';', ':', '/');
 
 					$novo_titulo = strtolower(str_replace($comAcentos, $semAcentos, $titulo))."-".str_replace("/","-",date("Y/m/d"));
 					$resultado = preg_replace('/[ -]+/' , '-' , $novo_titulo);
@@ -183,22 +185,20 @@ class ajaxController extends controller {
 					$url = $resultado;
 					$legenda = htmlspecialchars($_POST['legenda']);
 					$arquivo = $novoNome;
-					$arquivo_prop = array(
-						'tipo' => 'video',
-						'legenda' => $legenda
-					);
+					$tipo = 'video';
 					$postagem = $_POST['noticia'];
 					$data = date("Y/m/d H:i:s");
 
 					$nova_noticia = new Noticias();
 					$nova_noticia->id_usuario = $id_usuario;
-					$nova_noticia->categoria = $categoria;
+					$nova_noticia->categoria_id = $categoria_id;
 					$nova_noticia->titulo = $titulo;
 					$nova_noticia->descricao = $descricao;
 					$nova_noticia->tags = $tags;
 					$nova_noticia->url = $url;
 					$nova_noticia->arquivo = $arquivo;
-					$nova_noticia->arquivo_prop = json_encode($arquivo_prop);
+					$nova_noticia->tipo = $tipo;
+					$nova_noticia->legenda = $legenda;
 					$nova_noticia->postagem = $postagem;
 					$nova_noticia->data = $data;
 					$nova_noticia->set_noticia();
@@ -214,15 +214,15 @@ class ajaxController extends controller {
 					$novoNome = uniqid().".$extensao"; 
 
 					$id_usuario = $_SESSION['id'];
-					$categoria = $_POST['categoria'];
+					$categoria_id = $_POST['categoria_id'];
 					$titulo = htmlspecialchars($_POST['titulo']);
 					$descricao = htmlspecialchars($_POST['descricao']);
 					$tags = htmlspecialchars($_POST['tags']);
 
 
-					$semAcentos = array('a', 'a', 'a', 'a', 'a', 'a', 'c', 'e', 'e', 'e', 'e', 'i', 'i', 'i', 'i', 'n', 'o', 'o', 'o', 'o', 'o', 'u', 'u', 'u', 'y', 'A', 'A', 'A', 'A', 'A', 'A', 'C', 'E', 'E', 'E', 'E', 'I', 'I', 'I', 'I', 'N', 'O', 'O', 'O', 'O', 'O', '0', 'U', 'U', 'U', '', '', '', '', '', '');
+					$semAcentos = array('a', 'a', 'a', 'a', 'a', 'a', 'c', 'e', 'e', 'e', 'e', 'i', 'i', 'i', 'i', 'n', 'o', 'o', 'o', 'o', 'o', 'u', 'u', 'u', 'y', 'A', 'A', 'A', 'A', 'A', 'A', 'C', 'E', 'E', 'E', 'E', 'I', 'I', 'I', 'I', 'N', 'O', 'O', 'O', 'O', 'O', '0', 'U', 'U', 'U', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-');
 
-					$comAcentos = array('à', 'á', 'â', 'ã', 'ä', 'å', 'ç', 'è', 'é', 'ê', 'ë', 'ì', 'í', 'î', 'ï', 'ñ', 'ò', 'ó', 'ô', 'õ', 'ö', 'ù', 'ü', 'ú', 'ÿ', 'À', 'Á', 'Â', 'Ã', 'Ä', 'Å', 'Ç', 'È', 'É', 'Ê', 'Ë', 'Ì', 'Í', 'Î', 'Ï', 'Ñ', 'Ò', 'Ó', 'Ô', 'Õ', 'Ö', 'O', 'Ù', 'Ü', 'Ú', '?', '!', ',', '(', ')', '"');
+					$comAcentos = array('à', 'á', 'â', 'ã', 'ä', 'å', 'ç', 'è', 'é', 'ê', 'ë', 'ì', 'í', 'î', 'ï', 'ñ', 'ò', 'ó', 'ô', 'õ', 'ö', 'ù', 'ü', 'ú', 'ÿ', 'À', 'Á', 'Â', 'Ã', 'Ä', 'Å', 'Ç', 'È', 'É', 'Ê', 'Ë', 'Ì', 'Í', 'Î', 'Ï', 'Ñ', 'Ò', 'Ó', 'Ô', 'Õ', 'Ö', 'O', 'Ù', 'Ü', 'Ú', '?', '!', ',', '(', ')', '"', '"', ';', ':', '/');
 
 					$novo_titulo = strtolower(str_replace($comAcentos, $semAcentos, $titulo))."-".str_replace("/","-",date("Y/m/d"));
 					$resultado = preg_replace('/[ -]+/' , '-' , $novo_titulo);
@@ -231,22 +231,20 @@ class ajaxController extends controller {
 					$url = $resultado;
 					$legenda = htmlspecialchars($_POST['legenda']);
 					$arquivo = $novoNome;
-					$arquivo_prop = array(
-						'tipo' => 'imagem',
-						'legenda' => $legenda
-					);
+					$tipo = 'imagem';
 					$postagem = $_POST['noticia'];
 					$data = date("Y/m/d H:i:s");
 
 					$nova_noticia = new Noticias();
 					$nova_noticia->id_usuario = $id_usuario;
-					$nova_noticia->categoria = $categoria;
+					$nova_noticia->categoria_id = $categoria_id;
 					$nova_noticia->titulo = $titulo;
 					$nova_noticia->descricao = $descricao;
 					$nova_noticia->tags = $tags;
 					$nova_noticia->url = $url;
 					$nova_noticia->arquivo = $arquivo;
-					$nova_noticia->arquivo_prop = json_encode($arquivo_prop);
+					$nova_noticia->tipo = $tipo;
+					$nova_noticia->legenda = $legenda;
 					$nova_noticia->postagem = $postagem;
 					$nova_noticia->data = $data;
 					$nova_noticia->set_noticia();
@@ -274,7 +272,7 @@ class ajaxController extends controller {
 
 		$dados = array();
 
-		if (!empty($_POST['id']) && !empty($_POST['titulo']) && !empty($_POST['descricao']) && !empty($_POST['tags']) && !empty($_POST['legenda']) && !empty($_POST['noticia']) && !empty($_POST['tipo'])) {
+		if (!empty($_POST['id']) && !empty($_POST['titulo']) && !empty($_POST['descricao']) && !empty($_POST['tags']) && !empty($_POST['legenda']) && !empty($_POST['noticia'])) {
 			
 			$id = $_POST['id'];
 			$titulo = $_POST['titulo'];
@@ -283,17 +281,12 @@ class ajaxController extends controller {
 			$tipo = $_POST['tipo'];
 			$legenda = $_POST['legenda'];
 
-			$arquivo_prop = array(
-				'tipo' => $tipo,
-				'legenda' => $legenda
-			);
-
 			$noticia_edit = new Noticias();
 			$noticia_edit->id = $id;
 			$noticia_edit->titulo = $titulo;
 			$noticia_edit->descricao = $descricao;
 			$noticia_edit->tags = $tags;
-			$noticia_edit->arquivo_prop = json_encode($arquivo_prop);
+			$noticia_edit->legenda = $legenda;
 			$noticia_edit->postagem = $_POST['noticia'];
 			$noticia_edit->update_new();
 
@@ -315,7 +308,7 @@ class ajaxController extends controller {
 
 		if (!empty($_POST['titulo'])) {
 			
-			$formatosPermitidos = array("png", "jpeg", "gif", "jpg", "mp4");
+			$formatosPermitidos = array("png", "jpeg", "gif", "jpg", "mp4", "svg");
 			$extensao = pathinfo($_FILES['anexo_noticia']['name'],  PATHINFO_EXTENSION);
 
 			if (in_array($extensao, $formatosPermitidos)) {
@@ -327,15 +320,15 @@ class ajaxController extends controller {
 					$novoNome = uniqid().".$extensao"; 
 
 					$id_usuario = $_SESSION['id'];
-					$categoria = $_POST['categoria'];
+					$categoria_id = $_POST['categoria_id'];
 					$titulo = htmlspecialchars($_POST['titulo']);
 					$descricao = htmlspecialchars($_POST['descricao']);
 					$tags = htmlspecialchars($_POST['tags']);
 
 
-					$semAcentos = array('a', 'a', 'a', 'a', 'a', 'a', 'c', 'e', 'e', 'e', 'e', 'i', 'i', 'i', 'i', 'n', 'o', 'o', 'o', 'o', 'o', 'u', 'u', 'u', 'y', 'A', 'A', 'A', 'A', 'A', 'A', 'C', 'E', 'E', 'E', 'E', 'I', 'I', 'I', 'I', 'N', 'O', 'O', 'O', 'O', 'O', '0', 'U', 'U', 'U', '', '', '', '', '', '');
+					$semAcentos = array('a', 'a', 'a', 'a', 'a', 'a', 'c', 'e', 'e', 'e', 'e', 'i', 'i', 'i', 'i', 'n', 'o', 'o', 'o', 'o', 'o', 'u', 'u', 'u', 'y', 'A', 'A', 'A', 'A', 'A', 'A', 'C', 'E', 'E', 'E', 'E', 'I', 'I', 'I', 'I', 'N', 'O', 'O', 'O', 'O', 'O', '0', 'U', 'U', 'U', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-');
 
-					$comAcentos = array('à', 'á', 'â', 'ã', 'ä', 'å', 'ç', 'è', 'é', 'ê', 'ë', 'ì', 'í', 'î', 'ï', 'ñ', 'ò', 'ó', 'ô', 'õ', 'ö', 'ù', 'ü', 'ú', 'ÿ', 'À', 'Á', 'Â', 'Ã', 'Ä', 'Å', 'Ç', 'È', 'É', 'Ê', 'Ë', 'Ì', 'Í', 'Î', 'Ï', 'Ñ', 'Ò', 'Ó', 'Ô', 'Õ', 'Ö', 'O', 'Ù', 'Ü', 'Ú', '?', '!', ',', '(', ')', '"');
+					$comAcentos = array('à', 'á', 'â', 'ã', 'ä', 'å', 'ç', 'è', 'é', 'ê', 'ë', 'ì', 'í', 'î', 'ï', 'ñ', 'ò', 'ó', 'ô', 'õ', 'ö', 'ù', 'ü', 'ú', 'ÿ', 'À', 'Á', 'Â', 'Ã', 'Ä', 'Å', 'Ç', 'È', 'É', 'Ê', 'Ë', 'Ì', 'Í', 'Î', 'Ï', 'Ñ', 'Ò', 'Ó', 'Ô', 'Õ', 'Ö', 'O', 'Ù', 'Ü', 'Ú', '?', '!', ',', '(', ')', '"', '"', ';', ':', '/');
 
 					$novo_titulo = strtolower(str_replace($comAcentos, $semAcentos, $titulo))."-".str_replace("/","-",date("Y/m/d"));
 					$resultado = preg_replace('/[ -]+/' , '-' , $novo_titulo);
@@ -344,22 +337,20 @@ class ajaxController extends controller {
 					$url = $resultado;
 					$legenda = htmlspecialchars($_POST['legenda']);
 					$arquivo = $novoNome;
-					$arquivo_prop = array(
-						'tipo' => 'video',
-						'legenda' => $legenda
-					);
+					$tipo = 'video';
 					$postagem = $_POST['noticia'];
 					$data = date("Y/m/d H:i:s");
 
 					$nova_opiniao = new Colunas();
 					$nova_opiniao->id_usuario = $id_usuario;
-					$nova_opiniao->categoria = $categoria;
+					$nova_opiniao->categoria_id = $categoria_id;
 					$nova_opiniao->titulo = $titulo;
 					$nova_opiniao->descricao = $descricao;
 					$nova_opiniao->tags = $tags;
 					$nova_opiniao->url = $url;
 					$nova_opiniao->arquivo = $arquivo;
-					$nova_opiniao->arquivo_prop = json_encode($arquivo_prop);
+					$nova_opiniao->tipo = $tipo;
+					$nova_opiniao->legenda = $legenda;
 					$nova_opiniao->postagem = $postagem;
 					$nova_opiniao->data = $data;
 					$nova_opiniao->set_opi();
@@ -375,15 +366,15 @@ class ajaxController extends controller {
 					$novoNome = uniqid().".$extensao"; 
 
 					$id_usuario = $_SESSION['id'];
-					$categoria = $_POST['categoria'];
+					$categoria_id = $_POST['categoria_id'];
 					$titulo = htmlspecialchars($_POST['titulo']);
 					$descricao = htmlspecialchars($_POST['descricao']);
 					$tags = htmlspecialchars($_POST['tags']);
 
 
-					$semAcentos = array('a', 'a', 'a', 'a', 'a', 'a', 'c', 'e', 'e', 'e', 'e', 'i', 'i', 'i', 'i', 'n', 'o', 'o', 'o', 'o', 'o', 'u', 'u', 'u', 'y', 'A', 'A', 'A', 'A', 'A', 'A', 'C', 'E', 'E', 'E', 'E', 'I', 'I', 'I', 'I', 'N', 'O', 'O', 'O', 'O', 'O', '0', 'U', 'U', 'U', '', '', '', '', '', '');
+					$semAcentos = array('a', 'a', 'a', 'a', 'a', 'a', 'c', 'e', 'e', 'e', 'e', 'i', 'i', 'i', 'i', 'n', 'o', 'o', 'o', 'o', 'o', 'u', 'u', 'u', 'y', 'A', 'A', 'A', 'A', 'A', 'A', 'C', 'E', 'E', 'E', 'E', 'I', 'I', 'I', 'I', 'N', 'O', 'O', 'O', 'O', 'O', '0', 'U', 'U', 'U', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-');
 
-					$comAcentos = array('à', 'á', 'â', 'ã', 'ä', 'å', 'ç', 'è', 'é', 'ê', 'ë', 'ì', 'í', 'î', 'ï', 'ñ', 'ò', 'ó', 'ô', 'õ', 'ö', 'ù', 'ü', 'ú', 'ÿ', 'À', 'Á', 'Â', 'Ã', 'Ä', 'Å', 'Ç', 'È', 'É', 'Ê', 'Ë', 'Ì', 'Í', 'Î', 'Ï', 'Ñ', 'Ò', 'Ó', 'Ô', 'Õ', 'Ö', 'O', 'Ù', 'Ü', 'Ú', '?', '!', ',', '(', ')', '"');
+					$comAcentos = array('à', 'á', 'â', 'ã', 'ä', 'å', 'ç', 'è', 'é', 'ê', 'ë', 'ì', 'í', 'î', 'ï', 'ñ', 'ò', 'ó', 'ô', 'õ', 'ö', 'ù', 'ü', 'ú', 'ÿ', 'À', 'Á', 'Â', 'Ã', 'Ä', 'Å', 'Ç', 'È', 'É', 'Ê', 'Ë', 'Ì', 'Í', 'Î', 'Ï', 'Ñ', 'Ò', 'Ó', 'Ô', 'Õ', 'Ö', 'O', 'Ù', 'Ü', 'Ú', '?', '!', ',', '(', ')', '"', '"', ';', ':', '/');
 
 					$novo_titulo = strtolower(str_replace($comAcentos, $semAcentos, $titulo))."-".str_replace("/","-",date("Y/m/d"));
 					$resultado = preg_replace('/[ -]+/' , '-' , $novo_titulo);
@@ -392,22 +383,20 @@ class ajaxController extends controller {
 					$url = $resultado;
 					$legenda = htmlspecialchars($_POST['legenda']);
 					$arquivo = $novoNome;
-					$arquivo_prop = array(
-						'tipo' => 'imagem',
-						'legenda' => $legenda
-					);
+					$tipo = 'imagem';
 					$postagem = $_POST['noticia'];
 					$data = date("Y/m/d H:i:s");
 
 					$nova_opiniao = new Colunas();
 					$nova_opiniao->id_usuario = $id_usuario;
-					$nova_opiniao->categoria = $categoria;
+					$nova_opiniao->categoria_id = $categoria_id;
 					$nova_opiniao->titulo = $titulo;
 					$nova_opiniao->descricao = $descricao;
 					$nova_opiniao->tags = $tags;
 					$nova_opiniao->url = $url;
 					$nova_opiniao->arquivo = $arquivo;
-					$nova_opiniao->arquivo_prop = json_encode($arquivo_prop);
+					$nova_opiniao->tipo = $tipo;
+					$nova_opiniao->legenda = $legenda;
 					$nova_opiniao->postagem = $postagem;
 					$nova_opiniao->data = $data;
 					$nova_opiniao->set_opi();
@@ -435,26 +424,20 @@ class ajaxController extends controller {
 
 		$dados = array();
 
-		if (!empty($_POST['id']) && !empty($_POST['titulo']) && !empty($_POST['descricao']) && !empty($_POST['tags']) && !empty($_POST['legenda']) && !empty($_POST['noticia']) && !empty($_POST['tipo'])) {
+		if (!empty($_POST['id']) && !empty($_POST['titulo']) && !empty($_POST['descricao']) && !empty($_POST['tags']) && !empty($_POST['legenda']) && !empty($_POST['noticia'])) {
 			
 			$id = $_POST['id'];
 			$titulo = $_POST['titulo'];
 			$descricao = $_POST['descricao'];
 			$tags = $_POST['tags'];
-			$tipo = $_POST['tipo'];
 			$legenda = $_POST['legenda'];
-
-			$arquivo_prop = array(
-				'tipo' => $tipo,
-				'legenda' => $legenda
-			);
 
 			$opi_edit = new Colunas();
 			$opi_edit->id = $id;
 			$opi_edit->titulo = $titulo;
 			$opi_edit->descricao = $descricao;
 			$opi_edit->tags = $tags;
-			$opi_edit->arquivo_prop = json_encode($arquivo_prop);
+			$opi_edit->legenda = $legenda;
 			$opi_edit->postagem = $_POST['noticia'];
 			$opi_edit->update_opi();
 
@@ -478,7 +461,7 @@ class ajaxController extends controller {
 
 		} else {
 
-			$formatosPermitidos = array("png", "jpeg", "gif", "jpg");
+			$formatosPermitidos = array("png", "jpeg", "gif", "jpg", "svg");
 			$extensao = pathinfo($_FILES['escudo_time']['name'],  PATHINFO_EXTENSION);
 
 			if (in_array($extensao, $formatosPermitidos)) {
@@ -531,21 +514,15 @@ class ajaxController extends controller {
 			$time_fora = htmlspecialchars($_POST['time_fora']);
 
 			$id_usuario = $_SESSION['id'];
-			$categoria = "esportes";
-			$jogo_prop = array(
-				'time_casa' => $time_casa,
-				'time_fora' => $time_fora,
-				'campeonato' => $campeonato,
-				'fase' => $fase
-			);
+			$categoria_id = 3;
 			$placar = $_POST['placar'];
 			$status_jogo = $_POST['status'];
 			$titulo = $time_casa." vs ".$time_fora;
 			$descricao = "Jogo válido pela fase ".$fase." do campeonato ".$campeonato." entre ".$time_casa." e ".$time_fora.". A data oficial do jogo é ".$data_oficial;
-			$tags = $time_fora.", ".$time_fora.", ".$campeonato.", ".$data_oficial.", ".$categoria.", ".$fase;
-			$semAcentos = array('a', 'a', 'a', 'a', 'a', 'a', 'c', 'e', 'e', 'e', 'e', 'i', 'i', 'i', 'i', 'n', 'o', 'o', 'o', 'o', 'o', 'u', 'u', 'u', 'y', 'A', 'A', 'A', 'A', 'A', 'A', 'C', 'E', 'E', 'E', 'E', 'I', 'I', 'I', 'I', 'N', 'O', 'O', 'O', 'O', 'O', '0', 'U', 'U', 'U', '', '', '', '', '', '');
+			$tags = $time_fora.", ".$time_fora.", ".$campeonato.", ".$data_oficial.", Esportes ".$fase;
+			$semAcentos = array('a', 'a', 'a', 'a', 'a', 'a', 'c', 'e', 'e', 'e', 'e', 'i', 'i', 'i', 'i', 'n', 'o', 'o', 'o', 'o', 'o', 'u', 'u', 'u', 'y', 'A', 'A', 'A', 'A', 'A', 'A', 'C', 'E', 'E', 'E', 'E', 'I', 'I', 'I', 'I', 'N', 'O', 'O', 'O', 'O', 'O', '0', 'U', 'U', 'U', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-');
 
-			$comAcentos = array('à', 'á', 'â', 'ã', 'ä', 'å', 'ç', 'è', 'é', 'ê', 'ë', 'ì', 'í', 'î', 'ï', 'ñ', 'ò', 'ó', 'ô', 'õ', 'ö', 'ù', 'ü', 'ú', 'ÿ', 'À', 'Á', 'Â', 'Ã', 'Ä', 'Å', 'Ç', 'È', 'É', 'Ê', 'Ë', 'Ì', 'Í', 'Î', 'Ï', 'Ñ', 'Ò', 'Ó', 'Ô', 'Õ', 'Ö', 'O', 'Ù', 'Ü', 'Ú', '?', '!', ',', '(', ')', '"');
+			$comAcentos = array('à', 'á', 'â', 'ã', 'ä', 'å', 'ç', 'è', 'é', 'ê', 'ë', 'ì', 'í', 'î', 'ï', 'ñ', 'ò', 'ó', 'ô', 'õ', 'ö', 'ù', 'ü', 'ú', 'ÿ', 'À', 'Á', 'Â', 'Ã', 'Ä', 'Å', 'Ç', 'È', 'É', 'Ê', 'Ë', 'Ì', 'Í', 'Î', 'Ï', 'Ñ', 'Ò', 'Ó', 'Ô', 'Õ', 'Ö', 'O', 'Ù', 'Ü', 'Ú', '?', '!', ',', '(', ')', '"', '"', ';', ':', '/');
 
 			$novo_titulo = strtolower(str_replace($comAcentos, $semAcentos, $titulo))."-".str_replace("/","-",date("Y/m/d"));
 			$resultado = preg_replace('/[ -]+/' , '-' , $novo_titulo);
@@ -555,7 +532,7 @@ class ajaxController extends controller {
 			$data = $_POST['data'];
 			$legenda = $_POST['legenda'];
 
-			$formatosPermitidos = array("png", "jpeg", "gif", "jpg", "mp4");
+			$formatosPermitidos = array("png", "jpeg", "gif", "jpg", "mp4", "svg");
 			$extensao = pathinfo($_FILES['anexo_jogo']['name'],  PATHINFO_EXTENSION);
 
 			if (in_array($extensao, $formatosPermitidos)) {
@@ -567,17 +544,17 @@ class ajaxController extends controller {
 					$novoNome = uniqid().".$extensao"; 
 
 					$arquivo = $novoNome;
-					$arquivo_prop = array(
-						'tipo' => 'video', 
-						'legenda' => $legenda
-					);
+					$tipo = 'video';
 
 					move_uploaded_file($temporario, $pasta.$novoNome);
 
 					$novo_jogo = new Jogos();
 					$novo_jogo->id_usuario = $id_usuario;
-					$novo_jogo->categoria = $categoria;
-					$novo_jogo->jogo_prop = json_encode($jogo_prop);
+					$novo_jogo->categoria_id = $categoria_id;
+					$novo_jogo->time_casa = $time_casa;
+					$novo_jogo->time_fora = $time_fora;
+					$novo_jogo->fase = $fase;
+					$novo_jogo->campeonato = $campeonato;
 					$novo_jogo->placar = $placar;
 					$novo_jogo->status_jogo = $status_jogo;
 					$novo_jogo->titulo = $titulo;
@@ -585,7 +562,8 @@ class ajaxController extends controller {
 					$novo_jogo->tags = $tags;
 					$novo_jogo->url = $url;
 					$novo_jogo->arquivo = $arquivo;
-					$novo_jogo->arquivo_prop = json_encode($arquivo_prop);
+					$novo_jogo->tipo = $tipo;
+					$novo_jogo->legenda = $legenda;
 					$novo_jogo->lances = $lances;
 					$novo_jogo->data = $data;
 					$novo_jogo->set_jogo();
@@ -599,17 +577,17 @@ class ajaxController extends controller {
 					$novoNome = uniqid().".$extensao"; 
 
 					$arquivo = $novoNome;
-					$arquivo_prop = array(
-						'tipo' => 'imagem', 
-						'legenda' => $legenda
-					);
+					$tipo = 'imagem';
 
 					move_uploaded_file($temporario, $pasta.$novoNome);
 
 					$novo_jogo = new Jogos();
 					$novo_jogo->id_usuario = $id_usuario;
-					$novo_jogo->categoria = $categoria;
-					$novo_jogo->jogo_prop = json_encode($jogo_prop);
+					$novo_jogo->categoria_id = $categoria_id;
+					$novo_jogo->time_casa = $time_casa;
+					$novo_jogo->time_fora = $time_fora;
+					$novo_jogo->fase = $fase;
+					$novo_jogo->campeonato = $campeonato;
 					$novo_jogo->placar = $placar;
 					$novo_jogo->status_jogo = $status_jogo;
 					$novo_jogo->titulo = $titulo;
@@ -617,7 +595,8 @@ class ajaxController extends controller {
 					$novo_jogo->tags = $tags;
 					$novo_jogo->url = $url;
 					$novo_jogo->arquivo = $arquivo;
-					$novo_jogo->arquivo_prop = json_encode($arquivo_prop);
+					$novo_jogo->tipo = $tipo;
+					$novo_jogo->legenda = $legenda;
 					$novo_jogo->lances = $lances;
 					$novo_jogo->data = $data;
 					$novo_jogo->set_jogo();
@@ -642,7 +621,7 @@ class ajaxController extends controller {
 
 		$dados = array();
 
-		if (!empty($_POST['id']) && !empty($_POST['campeonato']) && !empty($_POST['fase']) && !empty($_POST['time_casa']) && !empty($_POST['placar']) && !empty($_POST['time_fora']) && !empty($_POST['status']) && !empty($_POST['legenda']) && !empty($_POST['tipo']) && !empty($_POST['lances'])) {
+		if (!empty($_POST['id']) && !empty($_POST['campeonato']) && !empty($_POST['fase']) && !empty($_POST['time_casa']) && !empty($_POST['placar']) && !empty($_POST['time_fora']) && !empty($_POST['status']) && !empty($_POST['legenda']) && !empty($_POST['lances'])) {
 
 			$campeonato = $_POST['campeonato'];
 			$fase = $_POST['fase'];
@@ -650,19 +629,8 @@ class ajaxController extends controller {
 			$placar = $_POST['placar'];
 			$time_fora = $_POST['time_fora'];
 			$legenda = $_POST['legenda'];
-			$tipo = $_POST['tipo'];
 
 			$id = $_POST['id'];
-			$jogo_prop = array(
-				'time_casa' => $time_casa,
-				'time_fora' => $time_fora,
-				'campeonato' => $campeonato,
-				'fase' => $fase
-			);
-			$arquivo_prop = array(
-				'tipo' => $tipo, 
-				'legenda' => $legenda
-			);
 			$lances = $_POST['lances'];
 			$status = $_POST['status'];
 			$titulo = $time_casa." vs ".$time_fora;
@@ -670,12 +638,15 @@ class ajaxController extends controller {
 
 			$jogo_edit = new Jogos();
 			$jogo_edit->id = $id;
-			$jogo_edit->jogo_prop = json_encode($jogo_prop);
+			$jogo_edit->time_casa = $time_casa;
+			$jogo_edit->time_fora = $time_fora;
+			$jogo_edit->fase = $fase;
+			$jogo_edit->campeonato = $campeonato;
 			$jogo_edit->placar = $placar;
 			$jogo_edit->titulo = $titulo;
 			$jogo_edit->descricao = $descricao;
 			$jogo_edit->status_jogo = $status;
-			$jogo_edit->arquivo_prop = json_encode($arquivo_prop);
+			$jogo_edit->legenda = $legenda;
 			$jogo_edit->lances = $lances;
 			$jogo_edit->update_jogo();
 			

@@ -1,10 +1,8 @@
 <?php
 
-	$propriedades = json_decode($usuario['usuario_prop']); 
-
 	$permissoes = explode(",", $usuario['permissoes']);
 
-	if ($propriedades->nivel == "escritor") {
+	if ($usuario['nivel'] == "escritor") {
 		
 		if (in_array("ADD", $permissoes)) {
 			# code...
@@ -70,7 +68,7 @@
 		<label for="anexo_noticia" class="card-conteudo card-file">
 			<div class="icon anexo">A</div>
 			<h3>ANEXO</h3>
-			<p>SELECIONE UM ARQUIVO (VÍDEO ATÉ 30s)</p>
+			<p>SELECIONE UM ARQUIVO (VÍDEO ATÉ 2 MB)</p>
 		</label>
 		<div class="card-conteudo card-input">
 			<div class="icon capa-anexo">L</div>
@@ -80,7 +78,7 @@
 	</div>
 
 	<input style="display: none;" type="file" id="anexo_noticia" name="anexo_noticia">
-	<input style="display: none;" type="text" id="categoria" name="categoria" value="<?php echo $propriedades->categoria; ?>">
+	<input style="display: none;" type="text" id="categoria_id" name="categoria_id" value="<?php echo $usuario['categoria_id']; ?>">
 
 	<!-- Topo -->
 	<div class="topo">

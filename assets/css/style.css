@@ -124,6 +124,43 @@
 }
 
 /*
+*	Tela de loading
+*/
+.fundo-escuro {
+	width: 100%;
+	position: fixed;
+	top: 0;
+	z-index: 3;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 667px;
+	background-color: rgba(0, 0, 0, 60%);
+}
+.loading-box {
+	width: 300px;
+	height: 300px;
+	background-color: white;
+	border-radius: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+}
+.loading-box img {
+	width: 150px;
+	height: 150px;
+}
+.loading-box h3 {
+    margin: 0;
+    padding: 0;
+    font-size: 18px;
+    font-family: 'montserratlight';
+    margin-top: 30px;
+    cursor: default;
+}
+
+/*
 *   Swalalert Customizações
 *
 */
@@ -365,6 +402,7 @@ body {
     font-family: 'montserratmedium';
     margin-top: 20px;
     cursor: default;
+    line-height: 20px;
 }
 .item-rodape a {
     margin: 0;
@@ -966,6 +1004,9 @@ body {
 @media screen and (max-width: 414px) and (min-width: 411px) {
   
   /* CSS */
+  .fundo-escuro {
+    height: 823px;
+  }
   .corpo {
     flex-direction: column;
     align-items: center;
@@ -1343,6 +1384,9 @@ body {
 @media screen and (max-width: 320px) {
   
   /* CSS */
+  .fundo-escuro {
+    height: 600px;
+  }
   .login form {
     width: 100%;
   }
