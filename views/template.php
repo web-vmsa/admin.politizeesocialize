@@ -120,7 +120,7 @@ if (isset($_SESSION['id']) && !empty($_SESSION['id'])) {
 
 				<p>TODOS OS DIREITOS RESERVADOS</p>
 
-				<p>@2020</p>
+				<p>@<?php echo date("Y"); ?></p>
 			</footer>		
 		</section>
 	</section>
